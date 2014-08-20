@@ -3,24 +3,34 @@ angular.module('starter.services', [])
 /**
  * A simple example service that returns some data.
  */
-.factory('PetService', function() {
-  // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  var pets = [
-    { id: 0, title: 'Cats', description: 'Furry little creatures. Obsessed with plotting assassination, but never following through on it.' },
-    { id: 1, title: 'Dogs', description: 'Lovable. Loyal almost to a fault. Smarter than they let on.' },
-    { id: 2, title: 'Turtles', description: 'Everyone likes turtles.' },
-    { id: 3, title: 'Sharks', description: 'An advanced pet. Needs millions of gallons of salt water. Will happily eat you.' }
-  ];
-
+.factory('DataService', ['$http', function($http, $log) {
   return {
-    all: function() {
-      return pets;
+         sync: function () {
+            $http.get("http://conemo.northwestern.edu/api/dialogs.json")
+            .success(function (data){
+              alert("Got data");
+              $log.info(data);
+            })
+            .error(function (data){
+              $log.info("error");
+            });
+         }
+      }
+  }
+])
+.factory('localstorage', ['$window', function($window) {
+  return {
+    set: function(key, value) {
+      $window.localStorage[key] = value;
     },
-    get: function(petId) {
-      // Simple index lookup
-      return pets[petId];
+    get: function(key, defaultValue) {
+      return $window.localStorage[key] || defaultValue;
+    },
+    setObject: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getObject: function(key) {
+      return JSON.parse($window.localStorage[key] || '{}');
     }
   }
-});
+}]);

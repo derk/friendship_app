@@ -1,0 +1,13 @@
+<ion-content>
+  <form ng-submit="loginUser(user)">
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="PIN" ng-model="user.pin">
+      </label>
+    </div>
+    <div class="padding">
+      <button type="submit" class="button button-block button-positive">Login</button>
+    </div>
+  </form>
+  <button class="button button-block button-negative" ng-click="sync()">Sync</button>
+</ion-content>

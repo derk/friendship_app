@@ -2,14 +2,16 @@ angular.module('starter.controllers', [])
 
 
 // A simple controller that fetches a list of data from a service
-.controller('PetIndexCtrl', function($scope, PetService) {
-  // "Pets" is a service returning mock data (services.js)
-  $scope.pets = PetService.all();
+.controller('AppCtrl', function($scope, $rootScope, DataService) {
+  $scope.user = {};
+
+  $scope.sync = function () {
+    DataService.sync();
+  }
+  // Called when the form is submitted
+  $scope.loginUser = function(user) {
+    //do some faux auth by querying the user table in local storage
+    $rootScope.session = user.pin;
+    $scope.user.pin = '';
+  };
 })
-
-
-// A simple controller that shows a tapped item's data
-.controller('PetDetailCtrl', function($scope, $stateParams, PetService) {
-  // "Pets" is a service returning mock data (services.js)
-  $scope.pet = PetService.get($stateParams.petId);
-});
