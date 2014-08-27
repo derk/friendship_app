@@ -15,3 +15,16 @@ angular.module('starter.controllers', [])
     $scope.user.pin = '';
   };
 })
+.controller('MainCtrl', function($scope) {
+  $scope.user = {};
+
+  $scope.sync = function () {
+    DataService.sync();
+  }
+  // Called when the form is submitted
+  $scope.loginUser = function(user) {
+    //do some faux auth by querying the user table in local storage
+    $rootScope.session = user.pin;
+    $scope.user.pin = '';
+  };
+})

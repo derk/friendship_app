@@ -1,15 +1,16 @@
 angular.module('starter.services', [])
 
-/**
- * A simple example service that returns some data.
- */
-.factory('DataService', ['$http', '$log', function($http, $log) {
+.factory('DataService', ['$http', '$log', 'localstorage', function($http, $log, localstorage) {
   return {
          sync: function () {
-            $http.get("http://www.corsproxy.com/conemo.northwestern.edu/api/dialogues.json")
+            $http.defaults.useXDomain = true;
+            $http.get("http://friendshipbench-staging.cbits.northwestern.edu/api/users")
             .success(function (data){
-              alert("Got data");
-              $log.info(data);
+
+              _.each(data, function (user) {
+                localstorage.setObject("users", user);
+              });
+              
             })
             .error(function (data){
               alert("error -- sync failed");
@@ -18,6 +19,7 @@ angular.module('starter.services', [])
       }
   }
 ])
+
 .factory('localstorage', ['$window', function($window) {
   return {
     set: function(key, value) {
@@ -32,5 +34,13 @@ angular.module('starter.services', [])
     getObject: function(key) {
       return JSON.parse($window.localStorage[key] || '{}');
     }
+  }
+}])
+
+.factory('AuthService', ['localstorage', function(localstorage) {
+  var authService = {};
+
+  authService.login = function (pin) {
+    
   }
 }]);
