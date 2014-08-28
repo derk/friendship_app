@@ -7,8 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
 
-
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, USER_ROLES) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -20,15 +19,43 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
     .state('login', {
       url: "/login",
       templateUrl: "templates/login.html",
-      controller: "AppCtrl"
+      controller: "LoginCtrl"
     })
-    .state('mainpage',{
-      url:"/mainpage",
-      templateUrl: "templates/mainpage.html",
-      controller: "MainCtrl"
-    });
+    .state('main', {
+      url: '/main',
+      templateUrl: 'templates/main.html',
+      data: {
+        authorizedRoles: [USER_ROLES.chw, USER_ROLES.researcher]
+      }
+    })
 
 })
+
+.config(function ($httpProvider) {
+  $httpProvider.interceptors.push([
+    '$injector',
+    function ($injector) {
+      return $injector.get('AuthInterceptor');
+    }
+  ]);
+})
+
+.constant('AUTH_EVENTS', {
+  loginSuccess: 'auth-login-success',
+  loginFailed: 'auth-login-failed',
+  logoutSuccess: 'auth-logout-success',
+  sessionTimeout: 'auth-session-timeout',
+  notAuthenticated: 'auth-not-authenticated',
+  notAuthorized: 'auth-not-authorized'
+})
+
+.constant('USER_ROLES', {
+  dev: 'dev',
+  chw: 'Health Worker',
+  researcher: 'Researcher',
+  asisstant: 'Research Assistant'
+})
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -40,5 +67,21 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
       StatusBar.styleDefault();
     }
   });
-});
+})
+
+.run(function ($rootScope, AUTH_EVENTS, AuthService) {
+  $rootScope.$on('$stateChangeStart', function (event, next) {
+    var authorizedRoles = next.data.authorizedRoles;
+    if (!AuthService.isAuthorized(authorizedRoles)) {
+      event.preventDefault();
+      if (AuthService.isAuthenticated()) {
+        // user is not allowed
+        $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+      } else {
+        // user is not logged in
+        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+      }
+    }
+  });
+})
 

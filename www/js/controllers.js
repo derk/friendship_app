@@ -1,30 +1,44 @@
 angular.module('starter.controllers', [])
 
-
 // A simple controller that fetches a list of data from a service
-.controller('AppCtrl', function($scope, $rootScope, DataService) {
-  $scope.user = {};
-
-  $scope.sync = function () {
-    DataService.sync();
-  }
-  // Called when the form is submitted
-  $scope.loginUser = function(user) {
-    //do some faux auth by querying the user table in local storage
-    $rootScope.session = user.pin;
-    $scope.user.pin = '';
+.controller('AppCtrl', function($scope, $rootScope, DataService, USER_ROLES, AuthService, Session) {
+  $scope.currentUser = null;
+  $scope.userRoles = USER_ROLES;
+  $scope.isAuthorized = AuthService.isAuthorized;
+ 
+  $scope.setCurrentUser = function (user) {
+    $scope.currentUser = user;
   };
-})
-.controller('MainCtrl', function($scope) {
-  $scope.user = {};
 
+  $scope.logOut = function () {
+    Session.destroy;
+  }
+})
+
+.controller('LoginCtrl', function($scope, $rootScope, $location, DataService, AUTH_EVENTS, AuthService) {
+
+  // syncs cached users with remote server
   $scope.sync = function () {
     DataService.sync();
   }
+
+  $scope.credentials = {
+    pin: ''
+  };
+
   // Called when the form is submitted
-  $scope.loginUser = function(user) {
-    //do some faux auth by querying the user table in local storage
-    $rootScope.session = user.pin;
-    $scope.user.pin = '';
+  $scope.loginUser = function (credentials) {
+    var user = AuthService.login(credentials);
+
+    if(user.pin){
+      $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+      $scope.setCurrentUser(user);
+      $location.path('main');
+      $scope.$apply();
+      alert("logged in");
+    }
+    else {
+      $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+    }
   };
 })
