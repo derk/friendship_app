@@ -19,25 +19,20 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
     .state('login', {
       url: "/login",
       templateUrl: "templates/login.html",
-      controller: "LoginCtrl"
+      controller: "LoginCtrl",
+      data: {
+        authorizedRoles: [USER_ROLES.all]
+      }
     })
     .state('main', {
       url: '/main',
       templateUrl: 'templates/main.html',
+      controller: "MainCtrl",
       data: {
-        authorizedRoles: [USER_ROLES.chw, USER_ROLES.researcher]
+        authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.researcher]
       }
     })
 
-})
-
-.config(function ($httpProvider) {
-  $httpProvider.interceptors.push([
-    '$injector',
-    function ($injector) {
-      return $injector.get('AuthInterceptor');
-    }
-  ]);
 })
 
 .constant('AUTH_EVENTS', {
@@ -53,7 +48,8 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
   dev: 'dev',
   chw: 'Health Worker',
   researcher: 'Researcher',
-  asisstant: 'Research Assistant'
+  asisstant: 'Research Assistant',
+  all: '*'
 })
 
 .run(function($ionicPlatform) {
@@ -71,15 +67,20 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
 
 .run(function ($rootScope, AUTH_EVENTS, AuthService) {
   $rootScope.$on('$stateChangeStart', function (event, next) {
+    if (next.controller === 'LoginCtrl'){
+      return
+    } 
     var authorizedRoles = next.data.authorizedRoles;
     if (!AuthService.isAuthorized(authorizedRoles)) {
       event.preventDefault();
       if (AuthService.isAuthenticated()) {
         // user is not allowed
         $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+        // alert(AUTH_EVENTS.notAuthorized);
       } else {
         // user is not logged in
         $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+        // alert(AUTH_EVENTS.notAuthenticated);
       }
     }
   });

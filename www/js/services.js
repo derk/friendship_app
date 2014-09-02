@@ -1,16 +1,18 @@
 angular.module('starter.services', [])
 
-.factory('DataService', ['$http', '$log', 'localstorage', function($http, $log, localstorage) {
+.factory('DataService', ['$http', 'localstorage', function($http, localstorage) {
   return {
     sync: function () {
       $http.defaults.useXDomain = true;
 
-      $http.get("http://friendshipbench-staging.cbits.northwestern.edu/api/users")
+      $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/users")
       
       .success(function (data){
         _.each(data, function (user) {
           localstorage.setObject("users", user);
         });
+        var now = new Date();
+        localstorage.set("lastSync", now)
         alert("sync successful");    
       })
       
@@ -44,7 +46,7 @@ angular.module('starter.services', [])
   authService.login = function (credentials) {
     var users = localstorage.getObject('users');
     var user = _.first(_.where(users, {pin: credentials.pin}));
-    if(!!user.pin) {
+    if(!!user) {
       Session.create(user.username, user.guid, user.role);
     }
     return user;
@@ -78,34 +80,18 @@ angular.module('starter.services', [])
   };
   return this;
 })
-
-.factory('AuthInterceptor', function ($rootScope, $q,
-                                      AUTH_EVENTS) {
-  return {
-    responseError: function (response) { 
-      $rootScope.$broadcast({
-        401: AUTH_EVENTS.notAuthenticated,
-        403: AUTH_EVENTS.notAuthorized,
-        419: AUTH_EVENTS.sessionTimeout,
-        440: AUTH_EVENTS.sessionTimeout
-      }[response.status], response);
-      return $q.reject(response);
-    }
-  };
-})
-
-.directive('loginDialog', function (AUTH_EVENTS) {
-  return {
-    restrict: 'A',
-    template: '<div ng-if="visible" ng-include="\'login.html\'">',
-    link: function (scope) {
-      var showDialog = function () {
-        scope.visible = true;
-      };
+// .directive('loginDialog', function (AUTH_EVENTS) {
+//   return {
+//     restrict: 'A',
+//     template: '<div ng-if="visible" ng-include="\'login.html\'">',
+//     link: function (scope) {
+//       var showDialog = function () {
+//         scope.visible = true;
+//       };
   
-      scope.visible = false;
-      scope.$on(AUTH_EVENTS.notAuthenticated, showDialog);
-      scope.$on(AUTH_EVENTS.sessionTimeout, showDialog)
-    }
-  };
-});
+//       scope.visible = false;
+//       scope.$on(AUTH_EVENTS.notAuthenticated, showDialog);
+//       scope.$on(AUTH_EVENTS.sessionTimeout, showDialog)
+//     }
+//   };
+// });

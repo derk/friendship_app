@@ -33,18 +33,18 @@
 
     <ion-pane>
       <ion-header-bar class="bar-stable">
+
         <h1 class="title">Friendship Bench</h1>
-        <button class="button" ng-click="logOut()">Sign Out</button>
+        <button ng-if="currentUser" class="button" ng-click="logOut()">Sign Out</button>
       </ion-header-bar>
-        <!-- <div ng-if="currentUser">Welcome, {{ currentUser.username }}</div>
-        <div ng-switch on="currentUser.role">
-          <div ng-switch-when="userRoles.researcher">You're researcher.</div>
-          <div ng-switch-when="userRoles.assistant">You're assistant.</div>
-          <div ng-switch-when="userRoles.chw">You're chw.</div>
-          <div ng-switch-when="userRoles.dev">You're dev.</div>
-          <div ng-switch-default>This is the default</div>
-        </div> -->
-    <ion-nav-view></ion-nav-view>
-    <div login-dialog ng-if="!isLoginPage"></div>
+      
+      <ion-nav-view></ion-nav-view>
+      <div ng-if="currentUser" class="bar bar-footer bar-dark">
+        <div class="padding">
+          Welcome, {{ currentUser.username }}
+        </div>
+      </div>
+
+    </ion-pane>
   </body>
 </html>
