@@ -39,9 +39,15 @@
       </ion-header-bar>
       
       <ion-nav-view></ion-nav-view>
-      <div ng-if="currentUser" class="bar bar-footer bar-dark">
-        <div class="padding">
-          Welcome, {{ currentUser.username }}
+      
+      <div class="bar bar-footer bar-dark">
+        <div class="row">
+          <div class="col col-75">
+            <span>Last sync: {{lastSync}}</span>
+          </div>
+          <div ng-if="currentUser" class="col">
+            <span>Welcome, {{ currentUser.username }}</span>
+          </div>
         </div>
       </div>
 

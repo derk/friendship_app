@@ -32,7 +32,14 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
         authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.researcher]
       }
     })
-
+    .state('newPatients', {
+      url: '/new_patients',
+      templateUrl: 'templates/new_patients.html',
+      controller: "NewPatientsCtrl",
+      data: {
+        authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.researcher]
+      }
+    })
 })
 
 .constant('AUTH_EVENTS', {

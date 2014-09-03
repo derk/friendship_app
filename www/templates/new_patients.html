@@ -1,0 +1,42 @@
+<ion-content direction="y" padding="true">
+  <h1>Register New Patient</h1>
+  <form ng-submit="createParticipant(participant)">
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="Patient Identifier" ng-model="participant.patientId">
+      </label>
+    </div>
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="First Name" ng-model="participant.firstName">
+      </label>
+    </div>
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="Last Name" ng-model="participant.lastName">
+      </label>
+    </div>
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="Address" ng-model="participant.address">
+      </label>
+    </div>
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="City" ng-model="participant.city">
+      </label>
+    </div>
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="Phone" ng-model="participant.phone">
+      </label>
+    </div>
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="Patient Identifier" ng-model="participant.patientId">
+      </label>
+    </div>
+      <button type="submit" class="button button-positive">Login</button>
+      <button class="button button-assertive" ng-click="reset()">Reset</button>
+  </form>
+</ion-content>

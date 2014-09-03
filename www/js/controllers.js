@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 // A simple controller that fetches a list of data from a service
-.controller('AppCtrl', function($scope, $rootScope, $state, DataService, USER_ROLES, AuthService, Session) {
+.controller('AppCtrl', function($scope, $rootScope, localstorage, $state, DataService, USER_ROLES, AuthService, Session) {
   $scope.currentUser = null;
   $scope.userRoles = USER_ROLES;
   $scope.isAuthorized = AuthService.isAuthorized;
@@ -14,7 +14,9 @@ angular.module('starter.controllers', [])
     $scope.currentUser = null;
     Session.destroy();
     $state.go('login');
-  }
+  };
+
+  $scope.lastSync = localstorage.get('lastSync');
 
   $scope.sessionId = Session.id;
   $scope.userId = Session.userId;
@@ -22,7 +24,28 @@ angular.module('starter.controllers', [])
 })
 
 .controller('MainCtrl', function($scope, localstorage) {
-  $scope.lastSync = localstorage.get('lastSync');
+  
+})
+
+.controller('NewPatientsCtrl', function($scope, localstorage) {
+  $scope.master = {
+    // patientId: '',
+    // firstName: '',
+    // lastName: '',
+    // address: '',
+    // city: '',
+    // phone: '',
+    // chw_guid: ''
+  };
+
+  $scope.createParticipant = function(participant) {
+    $scope.master = angular.copy(participant);
+  };
+
+  $scope.reset = function() {
+    $scope.participant = angular.copy($scope.master);
+  };
+  $scope.reset();
 })
 
 .controller('LoginCtrl', function($scope, $rootScope, $state, DataService, AUTH_EVENTS, AuthService) {
