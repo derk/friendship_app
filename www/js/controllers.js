@@ -16,35 +16,48 @@ angular.module('starter.controllers', [])
     $state.go('login');
   };
 
-  $scope.lastSync = localstorage.get('lastSync');
-
   $scope.sessionId = Session.id;
   $scope.userId = Session.userId;
   $scope.userRole = Session.userRole;
 })
 
-.controller('MainCtrl', function($scope, localstorage) {
-  
+.controller('MainCtrl', function($scope, localstorage, DataService) {
+  function lastSync() {
+    $scope.lastSync = localstorage.get('lastSync');
+  };
+
+  $scope.sync = function () {
+    DataService.sync();
+    lastSync();
+  }
+
+  lastSync();
 })
 
-.controller('NewPatientsCtrl', function($scope, localstorage) {
-  $scope.master = {
-    // patientId: '',
-    // firstName: '',
-    // lastName: '',
-    // address: '',
-    // city: '',
-    // phone: '',
-    // chw_guid: ''
-  };
+.controller('PatientsCtrl', function($scope, $state) {
+  $scope.participants = p.find("participants");
+})
+
+.controller('NewPatientsCtrl', function($scope, GuidMaker, $state) {
 
   $scope.createParticipant = function(participant) {
-    $scope.master = angular.copy(participant);
+    if(p.find("participants", {patientId: participant.patientId}).length == 0) {
+      participant.guid = GuidMaker.guid();
+      p.save('participants', participant);
+      $scope.reset();
+      $state.go('main');
+    }
+    else {
+      alert("Patient already exists");
+      $scope.reset(); 
+    }
+
   };
 
-  $scope.reset = function() {
-    $scope.participant = angular.copy($scope.master);
+  $scope.reset = function(event) {
+    $scope.participant = {};
   };
+
   $scope.reset();
 })
 

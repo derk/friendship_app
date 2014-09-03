@@ -1,6 +1,6 @@
 <ion-content direction="y" padding="true">
   <h1>Register New Patient</h1>
-  <form ng-submit="createParticipant(participant)">
+  <form ng-submit="createParticipant(participant)" novalidate>
     <div class="list">
       <label class="item item-input">
         <input type="text" placeholder="Patient Identifier" ng-model="participant.patientId">
@@ -31,12 +31,9 @@
         <input type="text" placeholder="Phone" ng-model="participant.phone">
       </label>
     </div>
-    <div class="list">
-      <label class="item item-input">
-        <input type="text" placeholder="Patient Identifier" ng-model="participant.patientId">
-      </label>
-    </div>
-      <button type="submit" class="button button-positive">Login</button>
-      <button class="button button-assertive" ng-click="reset()">Reset</button>
+    <button type="submit" class="button button-positive button-block">Save</button>
+      
   </form>
+  <button class="button button-assertive button-block" ng-click="reset()">Reset</button>
+  <button class="button button-stable button-block" ui-sref="main">Cancel</button>
 </ion-content>

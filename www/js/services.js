@@ -8,14 +8,13 @@ angular.module('starter.services', [])
       $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/users")
       
       .success(function (data){
-        _.each(data, function (user) {
-          localstorage.setObject("users", user);
+        _.each(data.users, function (user) {
+            p.save("users", user);
         });
         var now = new Date();
         localstorage.set("lastSync", now)
         alert("sync successful");    
       })
-      
       .error(function (err){
         alert("error -- sync failed");
       });
@@ -80,18 +79,16 @@ angular.module('starter.services', [])
   };
   return this;
 })
-// .directive('loginDialog', function (AUTH_EVENTS) {
-//   return {
-//     restrict: 'A',
-//     template: '<div ng-if="visible" ng-include="\'login.html\'">',
-//     link: function (scope) {
-//       var showDialog = function () {
-//         scope.visible = true;
-//       };
-  
-//       scope.visible = false;
-//       scope.$on(AUTH_EVENTS.notAuthenticated, showDialog);
-//       scope.$on(AUTH_EVENTS.sessionTimeout, showDialog)
-//     }
-//   };
-// });
+
+.service('GuidMaker', function(){
+    this.s4 = function () {
+        return Math.floor((1 + Math.random()) * 0x10000)
+                   .toString(16)
+                   .substring(1);
+    };
+    this.guid = function() {
+        return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' +
+               this.s4() + '-' + this.s4() + this.s4() + this.s4();
+    };
+    return this;
+})

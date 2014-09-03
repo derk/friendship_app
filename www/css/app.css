@@ -6,3 +6,22 @@
   width: 96px;
   height: 96px;
 }
+
+table {
+  padding: 10px;
+  margin: auto;
+  margin-top: 5%;
+  border-bottom: 1px solid black;  
+}
+table th, td{
+  padding: 10px;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  width: 190px;
+  text-align: center;
+}
+table th {
+  background-color: gray;
+  color: white;
+  border-top: 1px solid black;
+}

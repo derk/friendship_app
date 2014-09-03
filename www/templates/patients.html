@@ -1,0 +1,16 @@
+<ion-content>
+  <table class="responsive">
+    <tr>
+      <th>Patient</th>
+      <th>Current Assessment</th>
+      <th>Next Appointment</th>
+      <th></th>
+    </tr>
+    <tr ng-repeat="patient in participants">
+      <td>{{patient.patientId}}</td>
+      <td>Current assessment title</td>
+      <td>Next Appointment date</td>
+      <td><i class="icon ion-chevron-right"></i>
+    </tr>
+  </table>
+</ion-content>
