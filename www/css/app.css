@@ -7,10 +7,12 @@
   height: 96px;
 }
 
+div.table-view {
+  margin-left: 10%;
+  margin-top: 2%;
+}
 table {
   padding: 10px;
-  margin: auto;
-  margin-top: 5%;
   border-bottom: 1px solid black;  
 }
 table th, td{
@@ -24,4 +26,7 @@ table th {
   background-color: gray;
   color: white;
   border-top: 1px solid black;
+}
+a.nav-link {
+  color: #1aacc3;
 }

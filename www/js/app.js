@@ -7,12 +7,14 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
 
-.config(function($stateProvider, $urlRouterProvider, USER_ROLES) {
+.config(function($stateProvider, $urlRouterProvider, USER_ROLES, $httpProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
+  $httpProvider.defaults.useXDomain = true;
+
   $urlRouterProvider.otherwise("login");
   
   $stateProvider
@@ -48,6 +50,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
         authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.researcher]
       }
     })
+
 })
 
 .constant('AUTH_EVENTS', {

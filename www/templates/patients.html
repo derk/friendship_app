@@ -1,16 +1,20 @@
-<ion-content>
-  <table class="responsive">
-    <tr>
-      <th>Patient</th>
-      <th>Current Assessment</th>
-      <th>Next Appointment</th>
-      <th></th>
-    </tr>
-    <tr ng-repeat="patient in participants">
-      <td>{{patient.patientId}}</td>
-      <td>Current assessment title</td>
-      <td>Next Appointment date</td>
-      <td><i class="icon ion-chevron-right"></i>
-    </tr>
-  </table>
+<ion-content padding="true">
+  <h1><a href="#" ui-sref="main" class="nav-link"><i class="icon ion-chevron-left"></i></a></h1>
+  <div class="table-view">
+    <h1 class="table-title">Manage Patients</h1>
+    <table>
+      <tr>
+        <th>Patient</th>
+        <th>Current Assessment</th>
+        <th>Next Appointment</th>
+        <th></th>
+      </tr>
+      <tr ng-repeat="patient in participants">
+        <td>{{patient.patientId}}</td>
+        <td>Current assessment title</td>
+        <td>Next Appointment date</td>
+        <td><i class="icon ion-chevron-right"></i></td>
+      </tr>
+    </table>
+  </div>
 </ion-content>

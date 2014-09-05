@@ -3,7 +3,6 @@ angular.module('starter.services', [])
 .factory('DataService', ['$http', 'localstorage', function($http, localstorage) {
   return {
     sync: function () {
-      $http.defaults.useXDomain = true;
 
       $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/users")
       
@@ -13,11 +12,30 @@ angular.module('starter.services', [])
         });
         var now = new Date();
         localstorage.set("lastSync", now)
-        alert("sync successful");    
+        alert("user sync successful");    
       })
       .error(function (err){
-        alert("error -- sync failed");
+        alert("error -- user sync failed");
       });
+
+      var participants = p.find("participants");
+
+      if(participants.length > 0){
+        $http({
+          url: "http://localhost:3000/api/participants",
+          method: "POST",
+          data: {"participants": participants},
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+         })
+        .success(function (data){
+          alert(data.res);
+        })
+        .error(function (data){
+          alert(data.error);
+        })
+      }
     }
   }
 }])
@@ -43,8 +61,7 @@ angular.module('starter.services', [])
   var authService = {};
  
   authService.login = function (credentials) {
-    var users = localstorage.getObject('users');
-    var user = _.first(_.where(users, {pin: credentials.pin}));
+    var user = _.first(p.find('users', {pin: credentials.pin}));
     if(!!user) {
       Session.create(user.username, user.guid, user.role);
     }
@@ -66,7 +83,7 @@ angular.module('starter.services', [])
   return authService;
 })
 
-.service('Session', function () {
+.service('Session', function (localstorage) {
   this.create = function (sessionId, userId, userRole) {
     this.id = sessionId;
     this.userId = userId;
