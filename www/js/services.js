@@ -55,11 +55,11 @@ angular.module('starter.services', [])
             'Content-Type': 'application/json; charset=utf-8'
           }
          })
-        .success(function (){
+        .success(function (data){
           importPatients(patients);
-          alert("patient export successful");    
+          alert(data.res);    
         })
-        .error(function (err){
+        .error(function (data){
           alert("error -- patient sync failed");
         });
       };

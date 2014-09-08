@@ -41,7 +41,7 @@ angular.module('starter.controllers', [])
 .controller('NewPatientsCtrl', function($scope, GuidMaker, $state) {
 
   $scope.createParticipant = function(participant) {
-    if(p.find("participants", {patientId: participant.patientId}).length == 0) {
+    if(p.find("participants", {patient_identifier: participant.patient_identifier}).length == 0) {
       participant.guid = GuidMaker.guid();
       p.save('participants', participant);
       $scope.reset();
