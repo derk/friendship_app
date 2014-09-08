@@ -1,7 +1,17 @@
 angular.module('starter.services', [])
 
-.factory('DataService', ['$http', 'localstorage', function($http, localstorage) {
+.service('lastSync', ['localstorage', function(localstorage){
+  this.update = function () {
+    var now = new Date();
+    localstorage.set("lastSync", now);
+    console.log("lastSync updated");
+  };
+  return this;
+}])
+
+.factory('DataService', ['$http', 'localstorage', 'lastSync', function($http, localstorage, lastSync) {
   return {
+    
     syncUsers: function () {
 
       $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/users")
@@ -10,32 +20,59 @@ angular.module('starter.services', [])
         _.each(data.users, function (user) {
             p.save("users", user);
         });
-        var now = new Date();
-        localstorage.set("lastSync", now)
+        
+        lastSync.update();
+
         alert("user sync successful");    
       })
       .error(function (err){
         alert("error -- user sync failed");
       });
     },
+    
     syncData: function() {
-      var participants = p.find("participants");
 
-      if(participants.length > 0){
+      function importPatients(patients) {
+        $http.get("http://localhost:3000/api/participants")
+        
+        .success(function (data){
+          p.nuke("participants");
+          _.each(data.participants, function (patient) {
+            p.save("participants", patient);
+          })
+        })
+        .error(function (data){
+          alert("patient import failed")
+        });
+      };
+      
+      function exportPatients(patients) {
         $http({
           url: "http://localhost:3000/api/participants",
           method: "POST",
-          data: {"participants": participants},
+          data: {"participants": patients},
           headers: {
             'Content-Type': 'application/json; charset=utf-8'
           }
          })
-        .success(function (data){
-          alert(data.res);
+        .success(function (){
+          importPatients(patients);
+          alert("patient export successful");    
         })
-        .error(function (data){
-          alert(data.error);
-        })
+        .error(function (err){
+          alert("error -- patient sync failed");
+        });
+      };
+
+      var participants = p.find("participants") || null;
+      
+      if(participants.length > 0){
+        exportPatients(participants);
+        lastSync.update();
+      }
+      else {
+        importPatients(participants);
+        lastSync.update();
       }
     }
   }
