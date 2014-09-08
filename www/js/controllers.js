@@ -26,8 +26,8 @@ angular.module('starter.controllers', [])
     $scope.lastSync = localstorage.get('lastSync');
   };
 
-  $scope.sync = function () {
-    DataService.sync();
+  $scope.syncData = function () {
+    DataService.syncData();
     lastSync();
   }
 
@@ -64,8 +64,8 @@ angular.module('starter.controllers', [])
 .controller('LoginCtrl', function($scope, $rootScope, $state, DataService, AUTH_EVENTS, AuthService) {
 
   // syncs cached users with remote server
-  $scope.sync = function () {
-    DataService.sync();
+  $scope.syncUsers = function () {
+    DataService.syncUsers();
   }
 
   $scope.credentials = {

@@ -2,7 +2,7 @@ angular.module('starter.services', [])
 
 .factory('DataService', ['$http', 'localstorage', function($http, localstorage) {
   return {
-    sync: function () {
+    syncUsers: function () {
 
       $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/users")
       
@@ -17,7 +17,8 @@ angular.module('starter.services', [])
       .error(function (err){
         alert("error -- user sync failed");
       });
-
+    },
+    syncData: function() {
       var participants = p.find("participants");
 
       if(participants.length > 0){
