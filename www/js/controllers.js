@@ -51,9 +51,8 @@ angular.module('starter.controllers', [])
       alert("Patient already exists");
       $scope.reset(); 
     }
-
   };
-
+  
   $scope.reset = function(event) {
     $scope.participant = {};
   };
