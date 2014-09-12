@@ -16,22 +16,22 @@ Friendship App is an HTML5 Cordova Android tablet application that works in conj
 ## App Install
 For OSX, use [Homebrew](http://brew.sh/) for package management. Use git for version control.
 AngularJS requires node.js and the bower package manager.
-### Install git:
+### Install git
 `brew install git`
-### Install node.js:
+### Install node.js
 `brew install node`
-### Install bower:
+### Install bower
 `sudo npm install -g bower`
 ### Install JSHint (for linting)
 `sudo npm install -g jshint`
-### Install the Android SDK:
+### Install the Android SDK
 `brew install android-sdk`
 
 `android`
 
 `[Click] 'Install Packages' <accept licenses>`
 
-### Install Ant in order to use the Android emulator:
+### Install Ant in order to use the Android emulator
 `brew install ant`
 ### Fetch repo and serve in local browser
 `$ git clone git@github.com:cbitstech/friendship_app.git (if ssh)`
@@ -39,7 +39,7 @@ AngularJS requires node.js and the bower package manager.
 `$ cd friendship_app`
 
 `$ ionic serve`
-### To emulate Adroid Make sure all dependencies have been installed.
+### To emulate Android make sure all dependencies have been installed
 
 - [haxm link for intel hardware acceleration for mac](https://confluence.nubic.northwestern.edu/download/attachments/1802317/haxm-macosx_r04.zip?version=1&modificationDate=1404249630272&api=v2)
 - The Intel accelerator is found in the Extras folder of SDK
@@ -52,6 +52,13 @@ AngularJS requires node.js and the bower package manager.
 `$ ionic platform add android`
 
 `$ ionic emulate android`
+
+### Build APK
+To build debugging APK:
+
+`corodova build android`
+
+APK is generated in `platforms/android/ant-build/`
 
 ### Further References
 [hax emulator configuration](http://www.javaexperience.com/hax-is-not-working-and-emulator-runs-in-emulation-mode/#ixzz2p3inMj34)
