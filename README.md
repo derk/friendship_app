@@ -1,5 +1,8 @@
 Friendship Bench Tablet Application
 ==========================
+The Friendship Bench project is intended to support an on-the-ground research project and intervention by providing care providers and researchers with the ability to manage enrolled patients, collect data about the intervention, and periodically assess patients for research outcome data.
+
+Friendship App is an HTML5 Cordova Android tablet application that works in conjunction with [Friendship Dash](https://github.com/cbitstech/friendship_dash).
 
 ## Technology Stack
 - Ionic
