@@ -65,6 +65,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
 .constant('USER_ROLES', {
   dev: 'dev',
   chw: 'Health Worker',
+  supervisor: "Supervisor",
   researcher: 'Researcher',
   asisstant: 'Research Assistant',
   all: '*'
