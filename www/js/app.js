@@ -21,10 +21,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
     .state('login', {
       url: "/login",
       templateUrl: "templates/login.html",
-      controller: "LoginCtrl",
-      data: {
-        authorizedRoles: [USER_ROLES.all]
-      }
+      controller: "LoginCtrl"
     })
     .state('main', {
       url: '/main',

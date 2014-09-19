@@ -11,9 +11,7 @@ angular.module('starter.factories', [])
         _.each(data.users, function (user) {
             p.save("users", user);
         });
-        
-        lastSync.update();
-
+    
         alert("user sync successful");    
       })
       .error(function (err){
@@ -34,6 +32,7 @@ angular.module('starter.factories', [])
             console.log(patient);
           });
           alert("patient import successful");
+          lastSync.update();
         })
         .error(function (data){
           alert("patient import failed")
@@ -52,7 +51,7 @@ angular.module('starter.factories', [])
          })
         .success(function (data){
           importPatients(patients);
-          alert(data.res);    
+          alert(data.res);
         })
         .error(function (data){
           alert("error -- patient sync failed");
@@ -63,11 +62,9 @@ angular.module('starter.factories', [])
       
       if(participants.length > 0){
         exportPatients(participants);
-        lastSync.update();
       }
       else {
         importPatients(participants);
-        lastSync.update();
       }
     }
   }
