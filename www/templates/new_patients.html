@@ -36,9 +36,11 @@
         <input type="text" placeholder="Clinic" ng-model="participant.clinic">
       </label>
     </div>
-    <button type="submit" class="button button-positive button-block">Save</button>
+    <button type="submit" class="button button-balanced button-block">Save</button>
       
   </form>
-  <button class="button button-assertive button-block" ng-click="reset()">Reset</button>
-  <button class="button button-stable button-block" ui-sref="main">Cancel</button>
+  <div class="button-bar">
+    <a class="button button-energized button-block" ng-click="reset()">Reset</a>
+    <a class="button button-calm button-block" ui-sref="main">Cancel</a>
+  </div>
 </ion-content>
