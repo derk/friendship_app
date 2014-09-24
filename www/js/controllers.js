@@ -34,8 +34,9 @@ angular.module('starter.controllers', [])
   lastSync();
 })
 
-.controller('PatientsCtrl', function($scope, $state) {
-  $scope.participants = p.find("participants");
+.controller('PatientsCtrl', function($scope, $state, ScopedParticipants, Session) {
+  $scope.participants = ScopedParticipants.participants($scope.currentUser);
+  $scope.userRole = Session.userRole;
 })
 
 .controller('NewPatientsCtrl', function($scope, GuidMaker, $state) {

@@ -1,0 +1,17 @@
+<div class="table-view">
+  <h1 class="table-title">Patient Assessments</h1>
+  <table>
+    <tr>
+      <th>Patient</th>
+      <th>Current Assessment</th>
+      <th>Next Appointment</th>
+      <th></th>
+    </tr>
+    <tr ng-repeat="patient in participants">
+      <td>{{patient.patient_identifier}}</td>
+      <td>Current assessment title</td>
+      <td>Next Appointment date</td>
+      <td><i class="icon ion-chevron-right"></i></td>
+    </tr>
+  </table>
+</div>

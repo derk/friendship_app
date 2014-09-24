@@ -23,6 +23,24 @@ angular.module('starter.services', [])
   return this;
 })
 
+.service('ScopedParticipants', function () {
+  this.participants = function (currentUser) {
+    switch (currentUser.role) {
+      case "Health Worker":
+        return p.find('participants', {health_worker_guid: currentUser.guid});
+        break;
+      case "Research Assistant":
+        return p.find('participants', {research_assistant_guid: currentUser.guid});
+        break;
+      case "Supervisor":
+        return p.find('participants');
+        break;
+      default:
+        alert('You are not authorized to manage any patients.');
+    }
+  }
+})
+
 .service('GuidMaker', function(){
     this.s4 = function () {
         return Math.floor((1 + Math.random()) * 0x10000)

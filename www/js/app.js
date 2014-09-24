@@ -28,7 +28,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
       templateUrl: 'templates/main.html',
       controller: "MainCtrl",
       data: {
-        authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.researcher]
+        authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.supervisor, USER_ROLES.chw]
       }
     })
     .state('newPatients', {
@@ -36,18 +36,29 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
       templateUrl: 'templates/new_patients.html',
       controller: "NewPatientsCtrl",
       data: {
-        authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.researcher]
+        authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.supervisor, USER_ROLES.chw]
       }
     })
     .state('patients', {
       url: '/patients',
-      templateUrl: 'templates/patients.html',
-      controller: "PatientsCtrl",
+      views: {
+        '': {
+          templateUrl: "templates/patients.html",
+          controller: "PatientsCtrl"
+        },
+        "health-worker-table@patients": {
+          templateUrl: "templates/health_worker_table.html",
+          controller: "PatientsCtrl"
+        },
+        "research-assistant-table@patients": {
+          templateUrl: "templates/research_assistant_table.html",
+          controller: "PatientsCtrl"
+        }
+      },
       data: {
-        authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.researcher]
+        authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.supervisor, USER_ROLES.chw]
       }
     })
-
 })
 
 .constant('AUTH_EVENTS', {

@@ -1,20 +1,7 @@
 <ion-content padding="true">
+
   <h1><a href="#" ui-sref="main" class="nav-link"><i class="icon ion-chevron-left"></i></a></h1>
-  <div class="table-view">
-    <h1 class="table-title">Manage Patients</h1>
-    <table>
-      <tr>
-        <th>Patient</th>
-        <th>Current Assessment</th>
-        <th>Next Appointment</th>
-        <th></th>
-      </tr>
-      <tr ng-repeat="patient in participants">
-        <td>{{patient.patient_identifier}}</td>
-        <td>Current assessment title</td>
-        <td>Next Appointment date</td>
-        <td><i class="icon ion-chevron-right"></i></td>
-      </tr>
-    </table>
-  </div>
+  
+  <div ui-view="health-worker-table" ng-show="userRole == 'Health Worker' || userRole == 'Supervisor'"></div>
+  <div ui-view="research-assistant-table" ng-show="userRole == 'Research Assistant' || userRole == 'Supervisor'"></div>
 </ion-content>

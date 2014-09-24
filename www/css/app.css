@@ -8,10 +8,13 @@
 }
 
 div.table-view {
-  margin-left: 10%;
   margin-top: 2%;
 }
+div.table-view .table-title {
+  margin-left: 20%;
+}
 table {
+  margin: auto;
   padding: 10px;
   border-bottom: 1px solid black;  
 }
