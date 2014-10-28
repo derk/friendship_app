@@ -5,7 +5,7 @@ angular.module('starter.controllers', [])
   $scope.currentUser = null;
   $scope.userRoles = USER_ROLES;
   $scope.isAuthorized = AuthService.isAuthorized;
- 
+
   $scope.setCurrentUser = function (user) {
     $scope.currentUser = user;
   };
@@ -45,20 +45,35 @@ angular.module('starter.controllers', [])
     if(p.find("participants", {patient_identifier: participant.patient_identifier}).length == 0) {
       participant.guid = GuidMaker.guid();
       p.save('participants', participant);
-      $scope.reset();
-      $state.go('main');
+      $state.go('newPatients.demographics');
     }
     else {
       alert("Patient already exists");
-      $scope.reset(); 
+      $scope.reset();
     }
   };
-  
+
   $scope.reset = function(event) {
     $scope.participant = {};
   };
 
   $scope.reset();
+
+  $scope.formTemplate = {
+        "first": {
+            "type": "text",
+            "label": ""
+        },
+        "last": {
+            "type": "text",
+            "label": ""
+        },
+        "submit": {
+            "type": "submit",
+            "label": "submit",
+            "attributes": {"class": "button"}
+        },
+    };
 })
 
 .controller('LoginCtrl', function($scope, $rootScope, $state, DataService, AUTH_EVENTS, AuthService) {

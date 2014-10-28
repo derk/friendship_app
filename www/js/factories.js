@@ -2,29 +2,29 @@ angular.module('starter.factories', [])
 
 .factory('DataService', ['$http', 'localstorage', 'lastSync', function($http, localstorage, lastSync) {
   return {
-    
+
     syncUsers: function () {
 
       $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/users")
-      
+
       .success(function (data){
         _.each(data.users, function (user) {
             p.save("users", user);
         });
-    
-        alert("user sync successful");    
+
+        alert("user sync successful");
       })
       .error(function (err){
         alert("error -- user sync failed");
       });
     },
-    
+
     syncData: function() {
 
       function importPatients(patients) {
         $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/participants")
         // $http.get("http://localhost:3000/api/participants")
-        
+
         .success(function (data){
           p.nuke("participants");
           _.each(data.participants, function (patient) {
@@ -38,7 +38,7 @@ angular.module('starter.factories', [])
           alert("patient import failed")
         });
       };
-      
+
       function exportPatients(patients) {
         $http({
           url: "https://friendshipbench-staging.cbits.northwestern.edu/api/participants",
@@ -59,7 +59,7 @@ angular.module('starter.factories', [])
       };
 
       var participants = p.find("participants");
-      
+
       if(participants.length > 0){
         exportPatients(participants);
       }
@@ -69,17 +69,6 @@ angular.module('starter.factories', [])
     }
   }
 }])
-
-// .factory('Participants', function (){
-//   return {
-//     collection: function(){
-//       var participants = p.find('participants');
-//       if(participants.length > 0){
-//         _.each
-//       }
-//     }
-//   }
-// })
 
 .factory('localstorage', ['$window', function($window) {
   return {
@@ -100,7 +89,7 @@ angular.module('starter.factories', [])
 
 .factory('AuthService', function (localstorage, Session) {
   var authService = {};
- 
+
   authService.login = function (credentials) {
     var user = _.first(p.find('users', {pin: credentials.pin}));
     if(!!user) {
@@ -108,11 +97,11 @@ angular.module('starter.factories', [])
     }
     return user;
   };
- 
+
   authService.isAuthenticated = function () {
     return !!Session.userId;
   };
- 
+
   authService.isAuthorized = function (authorizedRoles) {
     if (!angular.isArray(authorizedRoles)) {
       authorizedRoles = [authorizedRoles];
@@ -120,6 +109,6 @@ angular.module('starter.factories', [])
     return (authService.isAuthenticated() &&
       authorizedRoles.indexOf(Session.userRole) !== -1);
   };
- 
+
   return authService;
 });

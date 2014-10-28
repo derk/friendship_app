@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', 'starter.factories'])
+angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', 'starter.factories', 'dynform'])
 
 .config(function($stateProvider, $urlRouterProvider, USER_ROLES, $httpProvider) {
 
@@ -16,7 +16,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
   $httpProvider.defaults.useXDomain = true;
 
   $urlRouterProvider.otherwise("login");
-  
+
   $stateProvider
     .state('login', {
       url: "/login",
@@ -31,14 +31,25 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
         authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.supervisor, USER_ROLES.chw]
       }
     })
+
     .state('newPatients', {
+      abstract: true,
       url: '/new_patients',
       templateUrl: 'templates/new_patients.html',
       controller: "NewPatientsCtrl",
       data: {
-        authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.supervisor, USER_ROLES.chw]
+        authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.supervisor]
       }
     })
+    .state('newPatients.phi', {
+      url: '/phi',
+      templateUrl: 'templates/newPatients.phi.html'
+    })
+    .state('newPatients.demographics', {
+      url: '/demographics',
+      templateUrl: "templates/newPatients.demographics.html",
+    })
+
     .state('patients', {
       url: '/patients',
       views: {
@@ -96,7 +107,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
   $rootScope.$on('$stateChangeStart', function (event, next) {
     if (next.controller === 'LoginCtrl'){
       return
-    } 
+    }
     var authorizedRoles = next.data.authorizedRoles;
     if (!AuthService.isAuthorized(authorizedRoles)) {
       event.preventDefault();

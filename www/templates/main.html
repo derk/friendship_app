@@ -1,8 +1,8 @@
 <ion-content>
   <div class="list card">
-    <a href="#" ui-sref='newPatients' class="item item-icon-left">
+    <a href="#" ui-sref='newPatients.phi' ng-if="currentUser.role != 'Health Worker'" class="item item-icon-left">
       <i class="icon ion-person-add"></i>
-      Register New Patients
+      Enroll New Patients
     </a>
     <a href="#" ui-sref='patients' class="item item-icon-left">
       <i class="icon ion-clipboard"></i>
@@ -20,7 +20,7 @@
       <span ng-model="lastSync">Last sync: {{lastSync}}</span>
     </div>
     <div ng-if="currentUser" class="col">
-      <span>Welcome, {{ currentUser.username }}</span>
+      <span>Welcome, {{ currentUser.email }}</span>
     </div>
   </div>
 </div>
