@@ -1,0 +1,27 @@
+<form>
+    <div ng-repeat="question in questionGroups" class="question-group list" data-idx="{{$index}}" ng-show='showQuestion({{$index}})' >
+        <label class="content-label">
+            <div ng-switch on="questionViewType(question.type)">
+                <div ng-switch-when="checkbox">
+                    <div ng-include="'surveys/checkbox.html'"></div>
+                </div>
+                <div ng-switch-when="radio">
+                    <div ng-include="'surveys/radio.html'"></div>
+                </div>
+                <div ng-switch-when="single">
+                    <div ng-include="'surveys/single.html'"></div>
+                </div>
+                <div ng-switch-default>
+                    <div ng-include="'surveys/html.html'"></div>
+                </div>
+            </div>
+            <div ng-include="'surveys/nav.html'"></div>
+        </label>
+    </div>
+</form>
+<div ng-show="surveyFailure().error" >
+    <div class="alert alert-danger">
+    <span ng-bind-html="_SURVEY_FAILURE_LABEL"></span><br/>
+    <span ng-bind-html="surveyFailure().message"></span>
+    </div>
+</div>

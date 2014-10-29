@@ -1,0 +1,17 @@
+
+<div class="response-group list">
+    <div ng-switch on="question.type">
+        <div ng-switch-when="textarea">
+            <label class="item item-input">
+                <span class="input-label"><div ng-include="'surveys/title.html'"></div></span>
+                <textarea name="{{question.questionDataLabel}}"></textarea>
+            </label>
+        </div>
+        <div ng-switch-default>
+            <label class="item item-input">
+                <span class="input-label"><div ng-include="'surveys/title.html'"></div></span>
+                <input type="{{question.type}}" name="{{question.questionDataLabel}}">
+            </label>
+        </div>
+    </div>
+</div>

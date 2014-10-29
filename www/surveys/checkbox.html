@@ -1,0 +1,10 @@
+<div ng-include="'surveys/title.html'"></div>
+
+<ul class="list">
+  <li class="item item-{{question.type}}" ng-repeat="response in question.responses">
+     <label class="{{question.type}}">
+       <input type="{{question.type}}" id="q{{question.questionDataLabel}}{{response.value}}" value="{{response.value}}">
+     </label>
+     {{response.label}}
+  </li>
+</ul>
