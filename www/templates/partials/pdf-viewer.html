@@ -1,0 +1,14 @@
+<ion-content>
+    <div class="button-bar">
+      <a class="button ion-arrow-left-a" ng-click="goPrevious()"></a>
+      <a class="button ion-arrow-right-a" ng-click="goNext()"></a>
+    </div>
+    <div class="button-bar">
+        <a class="button ion-plus-circled" ng-click="zoomIn()"></a>
+        <a class="button ion-minus-circled" ng-click="zoomOut()"></a>
+    </div>
+    <span>Page: </span><input type="text" min=1 ng-model="pageNum"><span> / {{pageCount}}</span>
+</ion-content>
+<ion-scroll direction="xy" style="width: 100%; height: 600px; margin-top: 140px;">
+    <canvas id="pdf-canvas"></canvas>
+</ion-scroll>

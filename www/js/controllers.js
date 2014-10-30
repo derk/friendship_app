@@ -34,6 +34,10 @@ angular.module('starter.controllers', [])
   lastSync();
 })
 
+.controller('PdfCtrl', function($scope) {
+    $scope.pdfUrl = '/manual.pdf';
+})
+
 .controller('PatientsCtrl', function($scope, $state, ScopedParticipants, Session) {
   $scope.participants = ScopedParticipants.participants($scope.currentUser);
   $scope.userRole = Session.userRole;

@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', 'starter.factories', 'starter.directives', 'dynform'])
+angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', 'starter.factories', 'starter.directives', 'pdf'])
 
 .config(function($stateProvider, $urlRouterProvider, USER_ROLES, $httpProvider) {
 
@@ -31,7 +31,14 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
         authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.supervisor, USER_ROLES.chw]
       }
     })
-
+    .state('pdf', {
+      url: '/pdf',
+      templateUrl: 'templates/pdf.html',
+      controller: 'PdfCtrl',
+      data: {
+        authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.supervisor, USER_ROLES.chw]
+      }
+    })
     .state('newPatients', {
       abstract: true,
       url: '/new_patients',
