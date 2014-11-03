@@ -35,7 +35,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PdfCtrl', function($scope) {
-    $scope.pdfUrl = '/manual.pdf';
+    $scope.pdfUrl = 'pdfs/manual.pdf';
 })
 
 .controller('PatientsCtrl', function($scope, $state, ScopedParticipants, Session) {
