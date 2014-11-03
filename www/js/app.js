@@ -115,19 +115,19 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
     if (next.controller === 'LoginCtrl'){
       return
     }
-    // var authorizedRoles = next.data.authorizedRoles;
-    // if (!AuthService.isAuthorized(authorizedRoles)) {
-    //   event.preventDefault();
-    //   if (AuthService.isAuthenticated()) {
-    //     // user is not allowed
-    //     $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-    //     // alert(AUTH_EVENTS.notAuthorized);
-    //   } else {
-    //     // user is not logged in
-    //     $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-    //     // alert(AUTH_EVENTS.notAuthenticated);
-    //   }
-    // }
+    var authorizedRoles = next.data.authorizedRoles;
+    if (!AuthService.isAuthorized(authorizedRoles)) {
+      event.preventDefault();
+      if (AuthService.isAuthenticated()) {
+        // user is not allowed
+        $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+        // alert(AUTH_EVENTS.notAuthorized);
+      } else {
+        // user is not logged in
+        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+        // alert(AUTH_EVENTS.notAuthenticated);
+      }
+    }
   });
 })
 

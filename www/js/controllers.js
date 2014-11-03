@@ -93,8 +93,10 @@ angular.module('starter.controllers', [])
   $scope.questionGroups = QuestionGroups.questions;
 })
 
-.controller('LoginCtrl', function($scope, $rootScope, $state, DataService, AUTH_EVENTS, AuthService) {
-
+.controller('LoginCtrl', function($scope, $rootScope, $state, DataService, AUTH_EVENTS, AuthService, Session) {
+  debugger;
+  $scope.currentUser = null;
+    Session.destroy();
   // syncs cached users with remote server
   $scope.syncUsers = function () {
     DataService.syncUsers();
