@@ -1,26 +1,33 @@
 angular.module('starter.services', [])
 
-.service('lastSync', ['localstorage', function(localstorage){
-  this.update = function () {
-    var now = new Date();
-    localstorage.set("lastSync", now);
-    console.log("lastSync updated");
-  };
-  return this;
+.service('lastSync', ['$rootScope', 'localstorage', function ($rootScope, localstorage){
+  return {
+    update: function () {
+      var now = new Date();
+      localstorage.set("lastSync", now);
+      console.log("lastSync updated");
+      $rootScope.$broadcast("synced!")
+    },
+    get: function () {
+      return localstorage.get("lastSync", null);
+    }
+  }
 }])
 
-.service('Session', function (localstorage) {
-  this.create = function (sessionId, userId, userRole) {
-    this.id = sessionId;
-    this.userId = userId;
-    this.userRole = userRole;
-  };
-  this.destroy = function () {
-    this.id = null;
-    this.userId = null;
-    this.userRole = null;
-  };
-  return this;
+.service('Session', function ($rootScope, $cookieStore) {
+  return {
+    create: function (user) {
+      $cookieStore.put('user', user);
+      $rootScope.$broadcast("userChanged");
+    },
+    destroy: function () {
+      $cookieStore.put('user', null);
+      $rootScope.$broadcast("userChanged");
+    },
+    currentUser: function() {
+     return $cookieStore.get('user')
+    }
+  }
 })
 
 .service('ScopedParticipants', function () {

@@ -87,19 +87,19 @@ angular.module('starter.factories', [])
   }
 }])
 
-.factory('AuthService', function (localstorage, Session) {
+.factory('AuthService', function (localstorage, Session, $cookieStore) {
   var authService = {};
 
   authService.login = function (credentials) {
     var user = _.first(p.find('users', {pin: credentials.pin}));
     if(!!user) {
-      Session.create(user.username, user.guid, user.role);
+      Session.create(user);
     }
     return user;
   };
 
   authService.isAuthenticated = function () {
-    return !!Session.userId;
+    return !!$cookieStore.get('user');
   };
 
   authService.isAuthorized = function (authorizedRoles) {
@@ -107,7 +107,7 @@ angular.module('starter.factories', [])
       authorizedRoles = [authorizedRoles];
     }
     return (authService.isAuthenticated() &&
-      authorizedRoles.indexOf(Session.userRole) !== -1);
+      authorizedRoles.indexOf($cookieStore.get('user').role) !== -1);
   };
 
   return authService;

@@ -1,14 +1,11 @@
 angular.module('starter.controllers', [])
 
 // A simple controller that fetches a list of data from a service
-.controller('AppCtrl', function($scope, $rootScope, localstorage, $state, DataService, USER_ROLES, AuthService, Session) {
-  $scope.currentUser = null;
+.controller('AppCtrl', function($scope, $state, USER_ROLES, AuthService, Session, $cookieStore, $rootScope, lastSync) {
+
+  $scope.currentUser = Session.currentUser();
   $scope.userRoles = USER_ROLES;
   $scope.isAuthorized = AuthService.isAuthorized;
-
-  $scope.setCurrentUser = function (user) {
-    $scope.currentUser = user;
-  };
 
   $scope.logOut = function () {
     $scope.currentUser = null;
@@ -16,22 +13,23 @@ angular.module('starter.controllers', [])
     $state.go('login');
   };
 
-  $scope.sessionId = Session.id;
-  $scope.userId = Session.userId;
-  $scope.userRole = Session.userRole;
+  $scope.$on('userChanged', function(){
+    $scope.currentUser = Session.currentUser();
+  });
+
+  $scope.lastSync = lastSync.get();
+  $scope.$on('synced!', function(){
+    $scope.lastSync = lastSync.get();
+  });
 })
 
-.controller('MainCtrl', function($scope, localstorage, DataService) {
-  function lastSync() {
-    $scope.lastSync = localstorage.get('lastSync');
-  };
+.controller('MainCtrl', function($scope, localstorage, DataService, Session, lastSync) {
 
   $scope.syncData = function () {
     DataService.syncData();
-    lastSync();
+    lastSync.update();
   }
 
-  lastSync();
 })
 
 .controller('PdfCtrl', function($scope) {
@@ -40,10 +38,10 @@ angular.module('starter.controllers', [])
 
 .controller('PatientsCtrl', function($scope, $state, ScopedParticipants, Session) {
   $scope.participants = ScopedParticipants.participants($scope.currentUser);
-  $scope.userRole = Session.userRole;
+  $scope.userRole = Session.currentUser().role;
 })
 
-.controller('NewPatientsCtrl', function($scope, GuidMaker, $state, $stateParams) {
+.controller('NewPatientsCtrl', function($scope, GuidMaker, $state, $stateParams, QuestionGroups) {
 
   $scope.createParticipant = function(participant) {
     if(p.find("participants", {patient_identifier: participant.patient_identifier}).length == 0) {
@@ -92,109 +90,7 @@ angular.module('starter.controllers', [])
 
         // });
 
-  $scope.questionGroups = [
-    {
-      content: "Include demographic information",
-      id: "d485d4c8d859f8cc",
-      order: 0,
-      questionDataLabel: "",
-      questionGroup: "demographics",
-      required: "",
-      responseGroupId: "",
-      responses: [],
-      type: "html"
-    },
-    {
-      content: "Over the past week, how often have you been bothered by LITTLE INTEREST OR PLEASURE IN DOING THINGS?",
-       id: "f99a845eea530b2c",
-       order: 1,
-       questionDataLabel: "demographics1",
-       questionGroup: "demographics",
-       required: "required",
-       responseGroupId: "demographics",
-       type: "radio",
-       responses: [
-        {
-          Objectid: "6f04febc1dcd99011",
-          label: "Not at all",
-          order: "1",
-          value: "0",
-          responseGroupId: "demographics",
-          responseGroupLabel: "demographics"
-        },
-        {
-        Objectid: "6f04febc1dcd99012",
-          label: "Several days",
-          order: "2",
-          value: "2",
-          responseGroupId: "demographics",
-          responseGroupLabel: "demographics"
-        },
-        {
-        Objectid: "6f04febc1dcd99013",
-          label: "More than half the days",
-          order: "3",
-          value: "3",
-          responseGroupId: "demographics",
-          responseGroupLabel: "demographics"
-        },
-        {
-        Objectid: "6f04febc1dcd99014",
-          label: "Nearly every day",
-          order: "4",
-          value: "4",
-          responseGroupId: "demographics",
-          responseGroupLabel: "demographics"
-        }
-      ]
-
-    },
-    {
-      content: "Over the past week, how often have you been bothered by LITTLE INTEREST OR PLEASURE IN DOING THINGS?",
-       id: "f99a845eea530b2c",
-       order: 2,
-       questionDataLabel: "demographics1",
-       questionGroup: "demographics",
-       required: "required",
-       responseGroupId: "demographics",
-       type: "checkbox",
-       responses: [
-        {
-          Objectid: "6f04febc1dcd99011",
-          label: "Not at all",
-          order: "1",
-          value: "0",
-          responseGroupId: "demographics",
-          responseGroupLabel: "demographics"
-        },
-        {
-        Objectid: "6f04febc1dcd99012",
-          label: "Several days",
-          order: "2",
-          value: "2",
-          responseGroupId: "demographics",
-          responseGroupLabel: "demographics"
-        },
-        {
-        Objectid: "6f04febc1dcd99013",
-          label: "More than half the days",
-          order: "3",
-          value: "3",
-          responseGroupId: "demographics",
-          responseGroupLabel: "demographics"
-        },
-        {
-        Objectid: "6f04febc1dcd99014",
-          label: "Nearly every day",
-          order: "4",
-          value: "4",
-          responseGroupId: "demographics",
-          responseGroupLabel: "demographics"
-        }
-      ]
-
-    }
-  ];
+  $scope.questionGroups = QuestionGroups.questions;
 })
 
 .controller('LoginCtrl', function($scope, $rootScope, $state, DataService, AUTH_EVENTS, AuthService) {
@@ -214,7 +110,6 @@ angular.module('starter.controllers', [])
 
     if(user){
       $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-      $scope.setCurrentUser(user);
       $state.go('main');
       $scope.credentials = {
         pin: ''

@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', 'starter.factories', 'starter.directives', 'pdf'])
+angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', 'starter.factories', 'starter.directives', 'pdf', 'starter.questions', 'ngCookies'])
 
 .config(function($stateProvider, $urlRouterProvider, USER_ROLES, $httpProvider) {
 
@@ -115,19 +115,19 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
     if (next.controller === 'LoginCtrl'){
       return
     }
-    var authorizedRoles = next.data.authorizedRoles;
-    if (!AuthService.isAuthorized(authorizedRoles)) {
-      event.preventDefault();
-      if (AuthService.isAuthenticated()) {
-        // user is not allowed
-        $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-        // alert(AUTH_EVENTS.notAuthorized);
-      } else {
-        // user is not logged in
-        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-        // alert(AUTH_EVENTS.notAuthenticated);
-      }
-    }
+    // var authorizedRoles = next.data.authorizedRoles;
+    // if (!AuthService.isAuthorized(authorizedRoles)) {
+    //   event.preventDefault();
+    //   if (AuthService.isAuthenticated()) {
+    //     // user is not allowed
+    //     $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+    //     // alert(AUTH_EVENTS.notAuthorized);
+    //   } else {
+    //     // user is not logged in
+    //     $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+    //     // alert(AUTH_EVENTS.notAuthenticated);
+    //   }
+    // }
   });
 })
 
