@@ -23,12 +23,19 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('MainCtrl', function($scope, localstorage, DataService, Session, lastSync) {
+.controller('MainCtrl', function($scope, localstorage, DataService, Session, lastSync, SurveyBuilder, $http) {
 
   $scope.syncData = function () {
     DataService.syncData();
     lastSync.update();
   }
+  $http.get('assessments/screening.json').
+    success(function(data, status, headers, config) {
+      SurveyBuilder.build(data);
+    }).
+    error(function(data, status, headers, config) {
+      // log error
+    });
 
 })
 
@@ -94,9 +101,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('LoginCtrl', function($scope, $rootScope, $state, DataService, AUTH_EVENTS, AuthService, Session) {
-  debugger;
-  $scope.currentUser = null;
-    Session.destroy();
+  Session.destroy();
   // syncs cached users with remote server
   $scope.syncUsers = function () {
     DataService.syncUsers();

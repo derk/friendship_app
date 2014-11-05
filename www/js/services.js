@@ -59,4 +59,14 @@ angular.module('starter.services', [])
                this.s4() + '-' + this.s4() + this.s4() + this.s4();
     };
     return this;
-});
+})
+
+.service('SurveyBuilder', function (){
+  return {
+    build: function(json) {
+      var content = {};
+      var source = json;
+      console.log(source);
+    }
+  }
+})
