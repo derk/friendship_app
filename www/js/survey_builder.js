@@ -12,6 +12,11 @@ angular.module('starter.survey_builder', [])
 
         //build new survey object
         var guid = GuidMaker.guid();
+
+        if(object.type === "numeric") {
+            object.type = "number";
+        };
+
         var question = {
             id: guid,
             questionGroup: object.group,

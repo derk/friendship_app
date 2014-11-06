@@ -90,9 +90,7 @@ angular.module('starter.controllers', [])
 
         // });
 
-      var promise = screeningService.getScreening();
-
-      promise.then(
+      screeningService.getScreening().then(
         function(payload) {
           $scope.questionGroups = SurveyBuilder.build(payload.data, "English")
         });

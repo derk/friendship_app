@@ -77,14 +77,17 @@ angular.module('starter.directives', [])
                 case "radio":
                 return "radio"
                 break;
+
                 case "checkbox":
                 return "checkbox"
                 break;
-                case "text" || "phone" || "email" || "textarea":
-                return "single"
-                break;
-                default:
+
+                case "html":
                 return "html"
+                break;
+
+                default:
+                return questionType
                 break;
 
             }
