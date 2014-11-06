@@ -23,19 +23,12 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('MainCtrl', function($scope, localstorage, DataService, Session, lastSync, SurveyBuilder, $http) {
+.controller('MainCtrl', function($scope, localstorage, DataService, Session, lastSync) {
 
   $scope.syncData = function () {
     DataService.syncData();
     lastSync.update();
   }
-  $http.get('assessments/screening.json').
-    success(function(data, status, headers, config) {
-      SurveyBuilder.build(data);
-    }).
-    error(function(data, status, headers, config) {
-      // log error
-    });
 
 })
 
@@ -48,7 +41,7 @@ angular.module('starter.controllers', [])
   $scope.userRole = Session.currentUser().role;
 })
 
-.controller('NewPatientsCtrl', function($scope, GuidMaker, $state, $stateParams, QuestionGroups) {
+.controller('NewPatientsCtrl', function($scope, GuidMaker, $state, $stateParams, SurveyBuilder, screeningService) {
 
   $scope.createParticipant = function(participant) {
     if(p.find("participants", {patient_identifier: participant.patient_identifier}).length == 0) {
@@ -70,8 +63,8 @@ angular.module('starter.controllers', [])
 
   $scope.pageTitle = 'Demographics';
 
-    //allows you to pass a question index url param into the question group directive
-    $scope.questionIndex = parseInt($stateParams.questionIndex)-1 || 0;
+  //allows you to pass a question index url param into the question group directive
+  $scope.questionIndex = parseInt($stateParams.questionIndex)-1 || 0;
 
     //overrides questiongroup default submit action to send data to PR
     // $scope.submit = function(){
@@ -97,7 +90,14 @@ angular.module('starter.controllers', [])
 
         // });
 
-  $scope.questionGroups = QuestionGroups.questions;
+      var promise = screeningService.getScreening();
+
+      promise.then(
+        function(payload) {
+          $scope.questionGroups = SurveyBuilder.build(payload.data, "English")
+        });
+
+
 })
 
 .controller('LoginCtrl', function($scope, $rootScope, $state, DataService, AUTH_EVENTS, AuthService, Session) {

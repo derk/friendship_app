@@ -61,12 +61,10 @@ angular.module('starter.services', [])
     return this;
 })
 
-.service('SurveyBuilder', function (){
-  return {
-    build: function(json) {
-      var content = {};
-      var source = json;
-      console.log(source);
+.service('screeningService', function ($http) {
+    return {
+      getScreening: function() {
+         return $http.get('assessments/screening.json');
+      }
     }
-  }
 })
