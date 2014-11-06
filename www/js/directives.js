@@ -1,99 +1,103 @@
 angular.module('starter.directives', [])
 
-.directive('survey', function ($location) {
+.directive('survey', function ($location, $timeout) {
     return {
       templateUrl: 'surveys/question_group.html',
       restrict: 'E',
-      link: function postLink(scope, element, attrs) {
+      link: function postLink($scope, element, attrs) {
 
-        scope.questionGroups = _.flatten(scope.$parent.questionGroups);
-
-        // -->  eliminate
-        scope._LABELS = scope.labels || [
-            {name:'back',label:'Back'},
-            {name:'next',label:'Next'},
-            {name:'submit', label:'Save'}
-        ];
-
-            scope._SURVEY_FAILURE_LABEL = scope.surveyFailureLabel || '<b>Unfortunately, this survey failed to load:</b>';
+        $timeout(function(){
 
 
-
-            scope.surveyFailure = function(){
-
-                  var error = {};
-                  //there are no questions
-                  if (scope.questionGroups.length == 0 && _.isArray(scope.questionGroups)) {
-                        error = { error:true, message:"There are no questions available." }
-                  }
-                  //questions are not in an array
-                  else if (_.isArray(scope.questionGroups) == false){
-                        error = { error:true, message:"Questions are not properly formatted." }
-                  }
-                  else {
-                        error = { error:false }
-                  }
-
-                  if (error.error == true){
-                        console.error(error);
-                  }
-
-                  return error
-
-            }
-
-        scope.label = function(labelName){
-            return _.where(scope._LABELS, {name:labelName})[0].label
-        }
-
-        scope.numberOfQuestions = scope.questionGroups.length;
+          $scope.questionGroups = _.flatten($scope.questionGroups);
 
 
-        scope.currentIndex = scope.questionIndex || 0;
+          // -->  eliminate
+          $scope._LABELS = $scope.labels || [
+              {name:'back',label:'Back'},
+              {name:'next',label:'Next'},
+              {name:'submit', label:'Save'}
+          ];
 
-        scope.showQuestion = function(questionIndex){
-            return questionIndex == scope.currentIndex;
-        }
-
-        scope.next = function(){
-            scope.currentIndex++;
-        };
-
-        scope.back = function(){
-            scope.currentIndex--;
-        };
+              $scope._SURVEY_FAILURE_LABEL = $scope.surveyFailureLabel || '<b>Unfortunately, this survey failed to load:</b>';
 
 
-        //is overridden by scope.complete function if different action is desired at the end of survey
-        scope.submit = scope.submit || function(){
-            console.log('OVERRIDE THIS IN YOUR CONTROLLER SCOPE: ',$('form').serializeArray());
-            $location.path('#/');
-        }
 
-        scope.questionViewType = function(questionType){
+              $scope.surveyFailure = function(){
 
-            switch (questionType){
+                    var error = {};
+                    //there are no questions
+                    if ($scope.questionGroups.length == 0 && _.isArray($scope.questionGroups)) {
+                          error = { error:true, message:"There are no questions available." }
+                    }
+                    //questions are not in an array
+                    else if (_.isArray($scope.questionGroups) == false){
+                          error = { error:true, message:"Questions are not properly formatted." }
+                    }
+                    else {
+                          error = { error:false }
+                    }
 
-                case "radio":
-                return "radio"
-                break;
+                    if (error.error == true){
+                          console.error(error);
+                    }
 
-                case "checkbox":
-                return "checkbox"
-                break;
+                    return error
 
-                case "html":
-                return "html"
-                break;
+              }
 
-                default:
-                return questionType
-                break;
+          $scope.label = function(labelName){
+              return _.where($scope._LABELS, {name:labelName})[0].label
+          }
 
-            }
+          $scope.numberOfQuestions = $scope.questionGroups.length;
 
-        }
 
+          $scope.currentIndex = $scope.questionIndex || 0;
+
+          $scope.showQuestion = function(questionIndex){
+              return questionIndex == $scope.currentIndex;
+          }
+
+          $scope.next = function(){
+              $scope.currentIndex++;
+          };
+
+          $scope.back = function(){
+              $scope.currentIndex--;
+          };
+
+
+          //is overridden by $scope.complete function if different action is desired at the end of survey
+          $scope.submit = $scope.submit || function(){
+              console.log('OVERRIDE THIS IN YOUR CONTROLLER SCOPE: ',$('form').serializeArray());
+              $location.path('#/');
+          }
+
+          $scope.questionViewType = function(questionType){
+
+              switch (questionType){
+
+                  case "radio":
+                  return "radio"
+                  break;
+
+                  case "checkbox":
+                  return "checkbox"
+                  break;
+
+                  case "html":
+                  return "html"
+                  break;
+
+                  default:
+                  return questionType
+                  break;
+
+              }
+
+          }
+        },0);
       }
     };
   });

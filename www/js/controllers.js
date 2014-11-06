@@ -43,29 +43,16 @@ angular.module('starter.controllers', [])
 
 .controller('NewPatientsCtrl', function($scope, GuidMaker, $state, $stateParams, SurveyBuilder, screeningService) {
 
-  $scope.createParticipant = function(participant) {
-    if(p.find("participants", {patient_identifier: participant.patient_identifier}).length == 0) {
-      participant.guid = GuidMaker.guid();
-      p.save('participants', participant);
-      $state.go('newPatients.demographics');
-    }
-    else {
-      alert("Patient already exists");
-      $scope.reset();
-    }
-  };
-
-  $scope.reset = function(event) {
-    $scope.participant = {};
-  };
-
-  $scope.reset();
-
-  $scope.pageTitle = 'Demographics';
-
   //allows you to pass a question index url param into the question group directive
-  $scope.questionIndex = parseInt($stateParams.questionIndex)-1 || 0;
 
+
+  //start screening
+    screeningService.getScreening().then(
+      function(payload) {
+        $scope.questionGroups = SurveyBuilder.build(payload.data, "English")
+      }
+    );
+     $scope.questionIndex = parseInt($stateParams.questionIndex)-1 || 0;
     //overrides questiongroup default submit action to send data to PR
     // $scope.submit = function(){
 
@@ -89,12 +76,6 @@ angular.module('starter.controllers', [])
         //   console.log(payload);
 
         // });
-
-      screeningService.getScreening().then(
-        function(payload) {
-          $scope.questionGroups = SurveyBuilder.build(payload.data, "English")
-        });
-
 
 })
 

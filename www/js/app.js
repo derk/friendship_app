@@ -49,6 +49,7 @@ angular.module('starter', [
         authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.supervisor, USER_ROLES.chw]
       }
     })
+
     .state('newPatients', {
       abstract: true,
       url: '/new_patients',
@@ -58,13 +59,10 @@ angular.module('starter', [
         authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.supervisor]
       }
     })
-    .state('newPatients.phi', {
-      url: '/phi',
-      templateUrl: 'templates/newPatients.phi.html'
-    })
-    .state('newPatients.demographics', {
-      url: '/demographics',
-      templateUrl: "templates/newPatients.demographics.html",
+
+    .state('newPatients.screening', {
+      url: '/screening',
+      templateUrl: "templates/newPatients.screening.html",
     })
 
     .state('patients', {
