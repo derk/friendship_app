@@ -1,8 +1,8 @@
 <div ng-include="'surveys/title.html'"></div>
 
 <div class="list" ng-repeat="response in question.responses">
-  <label class="item item-radio" for="q{{question.questionDataLabel}}{{response.value}}">
-    <input type="{{question.type}}" name="{{question.questionDataLabel}}" id="q{{question.questionDataLabel}}{{response.value}}" value="{{response.value}}">
+  <label class="item item-radio" for="{{question.questionDataLabel}}{{response.value}}">
+    <input type="{{question.type}}" name="{{question.questionDataLabel}}" id="{{question.questionDataLabel}}{{response.value}}" value="{{response.value}}" ng-model="viewModel.{{question.questionDataLabel}}">
     <div class="item-content">
       {{response.label}}
     </div>

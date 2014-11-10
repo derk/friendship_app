@@ -8,6 +8,7 @@ angular.module('starter.directives', [])
 
         $timeout(function(){
 
+          $scope.viewModel = 'hello'
 
           $scope.questionGroups = _.flatten($scope.questionGroups);
 

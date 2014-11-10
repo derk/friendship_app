@@ -43,9 +43,6 @@ angular.module('starter.controllers', [])
 
 .controller('NewPatientsCtrl', function($scope, GuidMaker, $state, $stateParams, SurveyBuilder, screeningService) {
 
-  //allows you to pass a question index url param into the question group directive
-
-
     //start screening
     $scope.getScreening = function (language) {
       screeningService.getScreening().then(
@@ -61,9 +58,7 @@ angular.module('starter.controllers', [])
     //overrides questiongroup default submit action to send data to PR
     // $scope.submit = function(){
 
-        // var _SAVE_LOCATION = 'surveys';
-
-        // var responses = $('form').serializeArray();
+    var responses = $scope.screening;
 
         // _.each(responses, function(el){
 

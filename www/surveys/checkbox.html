@@ -3,7 +3,7 @@
 <ul class="list">
   <li class="item item-{{question.type}}" ng-repeat="response in question.responses">
      <label class="{{question.type}}">
-       <input type="{{question.type}}" id="q{{question.questionDataLabel}}{{response.value}}" value="{{response.value}}">
+       <input type="{{question.type}}" id="{{question.questionDataLabel}}{{response.value}}" value="{{response.value}}" ng-model="viewModel.'{{question.questionDataLabel}}'">
      </label>
      {{response.label}}
   </li>
