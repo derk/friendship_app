@@ -60,6 +60,11 @@ angular.module('starter', [
       }
     })
 
+    .state('newPatients.landing', {
+      url: '/landing',
+      templateUrl: "templates/newPatients.landing.html",
+    })
+
     .state('newPatients.screening', {
       url: '/screening',
       templateUrl: "templates/newPatients.screening.html",

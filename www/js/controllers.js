@@ -46,13 +46,18 @@ angular.module('starter.controllers', [])
   //allows you to pass a question index url param into the question group directive
 
 
-  //start screening
-    screeningService.getScreening().then(
-      function(payload) {
-        $scope.questionGroups = SurveyBuilder.build(payload.data, "English")
-      }
-    );
-     $scope.questionIndex = parseInt($stateParams.questionIndex)-1 || 0;
+    //start screening
+    $scope.getScreening = function (language) {
+      screeningService.getScreening().then(
+        function(payload) {
+          $scope.questionGroups = SurveyBuilder.build(payload.data, language)
+          $state.go('newPatients.screening')
+          $scope.language = language
+        }
+      );
+    };
+
+    $scope.questionIndex = parseInt($stateParams.questionIndex)-1 || 0;
     //overrides questiongroup default submit action to send data to PR
     // $scope.submit = function(){
 
