@@ -58,7 +58,7 @@ angular.module('starter.controllers', [])
     //overrides questiongroup default submit action to send data to PR
     // $scope.submit = function(){
 
-    var responses = $scope.screening;
+   $scope.survey = {};
 
         // _.each(responses, function(el){
 
