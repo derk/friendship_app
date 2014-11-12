@@ -9,6 +9,8 @@ angular.module('starter.survey_builder', [])
       _.each(source, function (object){
 
         //build new survey object
+
+        // This should already be generated server side...
         var guid = GuidMaker.guid();
 
         if(object.type === "numeric") {
@@ -18,7 +20,7 @@ angular.module('starter.survey_builder', [])
         var question = {
             id: guid,
             questionGroup: object.group,
-            questionDataLabel: (object.group + object.orderer),
+            questionDataLabel: (object.group + '_' + object.orderer),
             responseGroupId: object.group,
             type: object.type,
             order: object.orderer,
@@ -68,7 +70,6 @@ angular.module('starter.survey_builder', [])
                     // push completed response object into finished array
                     responses.push(responseObject);
 
-
                 }
             }
         });
@@ -81,10 +82,9 @@ angular.module('starter.survey_builder', [])
 
       });
 
-
         var groupedContent = _.toArray(_.groupBy(content, 'order'));
         console.log(groupedContent);
-        return groupedContent
+        return groupedContent;
 
     }
   }

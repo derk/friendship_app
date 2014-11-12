@@ -41,7 +41,7 @@ angular.module('starter.controllers', [])
   $scope.userRole = Session.currentUser().role;
 })
 
-.controller('NewPatientsCtrl', function($scope, GuidMaker, $state, $stateParams, SurveyBuilder, screeningService) {
+.controller('NewPatientsCtrl', function($scope, GuidMaker, $state, $stateParams, SurveyBuilder, screeningService, Session) {
 
     //start screening
     $scope.getScreening = function (language) {
@@ -69,7 +69,20 @@ angular.module('starter.controllers', [])
 
    $scope.questionIndex = parseInt($stateParams.questionIndex)-1 || 0;
 
-   $scope.survey = {};
+   $scope.responses = {};
+   $scope.clinic = {};
+
+   $scope.submit = function () {
+      var surveyResponse = {
+        surveyType: "screening",
+        user_id: Session.currentUser,
+        time: new Date(),
+        client_id: "ClientIdString",
+        responses: $scope.responses
+      };
+
+      console.log(surveyResponse);
+   }
 
 })
 

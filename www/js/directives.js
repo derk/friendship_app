@@ -8,7 +8,7 @@ angular.module('starter.directives', [])
 
         $timeout(function(){
 
-          scope.survey = scope.$parent.survey;
+          scope.responses = scope.$parent.responses;
 
           scope.questionGroups = scope.$parent.questionGroups;
 
@@ -33,7 +33,7 @@ angular.module('starter.directives', [])
 
           scope.next = function(){
               scope.currentIndex++;
-              console.log(scope.survey);
+              console.log(scope.responses);
           };
 
           scope.back = function(){
