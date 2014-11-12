@@ -5,10 +5,8 @@ angular.module('starter.survey_builder', [])
     build: function(source, sourceLanguage) {
       var content = [];
 
-      var filteredSource = _.where(source, {language: sourceLanguage});
-
       // Loop through each object
-      _.each(filteredSource, function (object){
+      _.each(source, function (object){
 
         //build new survey object
         var guid = GuidMaker.guid();
@@ -83,8 +81,10 @@ angular.module('starter.survey_builder', [])
 
       });
 
-        console.log(content);
-        return content
+
+        var groupedContent = _.toArray(_.groupBy(content, 'order'));
+        console.log(groupedContent);
+        return groupedContent
 
     }
   }

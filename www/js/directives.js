@@ -8,45 +8,15 @@ angular.module('starter.directives', [])
 
         $timeout(function(){
 
-          console.log(attrs);
+          scope.survey = scope.$parent.survey;
 
-          scope.survey = scope.$parent.survey
+          scope.questionGroups = scope.$parent.questionGroups;
 
-          scope.questionGroups = _.flatten(scope.$parent.questionGroups);
-
-          // -->  eliminate
           scope._LABELS = scope.labels || [
               {name:'back',label:'Back'},
               {name:'next',label:'Next'},
               {name:'submit', label:'Save'}
           ];
-
-              // scope._SURVEY_FAILURE_LABEL = scope.surveyFailureLabel || '<b>Unfortunately, this survey failed to load:</b>';
-
-
-
-              // scope.surveyFailure = function(){
-
-              //       var error = {};
-              //       //there are no questions
-              //       if (scope.questionGroups.length == 0 && _.isArray(scope.questionGroups)) {
-              //             error = { error:true, message:"There are no questions available." }
-              //       }
-              //       //questions are not in an array
-              //       else if (_.isArray(scope.questionGroups) == false){
-              //             error = { error:true, message:"Questions are not properly formatted." }
-              //       }
-              //       else {
-              //             error = { error:false }
-              //       }
-
-              //       if (error.error == true){
-              //             console.error(error);
-              //       }
-
-              //       return error
-
-              // }
 
           scope.label = function(labelName){
               return _.where(scope._LABELS, {name:labelName})[0].label
@@ -69,13 +39,6 @@ angular.module('starter.directives', [])
           scope.back = function(){
               scope.currentIndex--;
           };
-
-
-          // //is overridden by scope.complete function if different action is desired at the end of survey
-          // scope.submit = scope.submit || function(){
-          //     console.log('OVERRIDE THIS IN YOUR CONTROLLER SCOPE: ',$('form').serializeArray());
-          //     $location.path('#/');
-          // }
 
           scope.questionViewType = function(questionType){
 

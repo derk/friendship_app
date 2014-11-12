@@ -1,10 +1,10 @@
 <div class="button-bar">
     {{hideBackButton}}
     {{hideNextButton}}
-    <a class="button button-calm button-block" ng-click='back()' ng-hide="{{question.hideBackButton}}" ng-if="$index != 0" ng-bind-html="label('back')"></a>
+    <a class="button button-calm button-block" ng-click='back()' ng-hide="{{questions.hideBackButton}}" ng-if="$index != 0" ng-bind-html="label('back')"></a>
     <a class="question-group-progress button button-block button-light" ng-hide="hideProgressBar">
     &nbsp;{{$index+1}} / {{numberOfQuestions}}&nbsp;
     </a>
-    <a class="button button-calm button-block" ng-click='next()' ng-hide="{{question.hideNextbutton}}" ng-if="$index != numberOfQuestions -1" ng-bind-html="label('next')"></a>
-    <a type="submit" class="button button-energized button-block" ng-click='submit()' ng-hide="{{question.hideNextButton}}" ng-if="$index == numberOfQuestions - 1" ng-bind-html="label('submit')"></a>
+    <a class="button button-calm button-block" ng-click='next()' ng-hide="{{questions.hideNextbutton}}" ng-if="$index != numberOfQuestions -1" ng-bind-html="label('next')"></a>
+    <a type="submit" class="button button-energized button-block" ng-click='submit()' ng-hide="{{questions.hideNextButton}}" ng-if="$index == numberOfQuestions - 1" ng-bind-html="label('submit')"></a>
 </div>

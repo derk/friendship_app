@@ -54,28 +54,22 @@ angular.module('starter.controllers', [])
       );
     };
 
-    $scope.questionIndex = parseInt($stateParams.questionIndex)-1 || 0;
-    //overrides questiongroup default submit action to send data to PR
-    // $scope.submit = function(){
+    $scope.switchLanguage = function (language) {
+        switch (language) {
+          case "English":
+            $scope.language = "Shona";
+            console.log($scope.language);
+            break;
+          case "Shona":
+            $scope.language = "English";
+            console.log($scope.language);
+            break;
+        }
+    };
+
+   $scope.questionIndex = parseInt($stateParams.questionIndex)-1 || 0;
 
    $scope.survey = {};
-
-        // _.each(responses, function(el){
-
-
-        //   var payload = {
-        //     userId: UserDetails.find,
-        //     survey: $scope.pageTitle,
-        //     questionDataLabel: el.name,
-        //     questionValue: el.value,
-        //     sessionGUID: Guid.create(),
-        //     savedAt: new Date()
-        //   };
-
-        //   // (new PurpleRobot()).emitReading(_SAVE_LOCATION,payload).execute();
-        //   console.log(payload);
-
-        // });
 
 })
 

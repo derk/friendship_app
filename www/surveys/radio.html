@@ -2,7 +2,7 @@
 
 <div class="list" ng-repeat="response in question.responses">
   <label class="item item-radio" for="{{question.questionDataLabel}}{{response.value}}">
-    <input type="{{question.type}}" name="{{question.questionDataLabel}}" id="{{question.questionDataLabel}}{{response.value}}" value="{{response.value}}" ng-model="survey[question.questionDataLabel]">
+    <input type="{{question.type}}" name="{{question.questionDataLabel}}_{{question.language}}" id="{{question.questionDataLabel}}{{response.value}}" value="{{response.value}}" ng-model="survey[question.questionDataLabel]">
     <div class="item-content">
       {{response.label}}
     </div>
