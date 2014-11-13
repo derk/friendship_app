@@ -3,6 +3,24 @@ angular.module('starter.factories', [])
 .factory('DataService', ['$http', 'localstorage', 'lastSync', function($http, localstorage, lastSync) {
   return {
 
+    getSurveys: function () {
+      $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/surveys")
+
+      .success(function (data){
+
+        p.nuke("surveyQuestions");
+        _.each(data.surveys, function (question) {
+            p.save("surveyQuestions", question);
+        });
+
+        alert("survey import successful");
+
+      })
+      .error(function (){
+        alert("error -- survey import failed");
+      })
+    },
+
     syncUsers: function () {
 
       $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/users")
@@ -91,7 +109,7 @@ angular.module('starter.factories', [])
   var authService = {};
 
   authService.login = function (credentials) {
-    var user = _.first(p.find('users', {pin: credentials.pin}));
+    var user = _.first(p.find('users', {pin: credentials.pin, email: credentials.email}));
     if(!!user) {
       Session.create(user);
     }

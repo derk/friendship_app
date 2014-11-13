@@ -41,28 +41,22 @@ angular.module('starter.controllers', [])
   $scope.userRole = Session.currentUser().role;
 })
 
-.controller('NewPatientsCtrl', function($scope, GuidMaker, $state, $stateParams, SurveyBuilder, screeningService, Session) {
+.controller('NewPatientsCtrl', function($scope, GuidMaker, $state, $stateParams, SurveyBuilder, surveyService, Session, ClientIdMaker) {
 
-    //start screening
     $scope.getScreening = function (language) {
-      screeningService.getScreening().then(
-        function(payload) {
-          $scope.questionGroups = SurveyBuilder.build(payload.data, language)
-          $state.go('newPatients.screening')
-          $scope.language = language
-        }
-      );
-    };
+      var screeningQuestions = surveyService.getScreening();
+      $scope.questionGroups = SurveyBuilder.build(screeningQuestions, language)
+      $state.go('newPatients.screening')
+      $scope.language = language
+    }
 
     $scope.switchLanguage = function (language) {
         switch (language) {
           case "English":
             $scope.language = "Shona";
-            console.log($scope.language);
             break;
           case "Shona":
             $scope.language = "English";
-            console.log($scope.language);
             break;
         }
     };
@@ -70,18 +64,26 @@ angular.module('starter.controllers', [])
    $scope.questionIndex = parseInt($stateParams.questionIndex)-1 || 0;
 
    $scope.responses = {};
-   $scope.clinic = {};
+
+   $scope.patient = {
+      guid: GuidMaker.guid(),
+      research_assistant_id: Session.currentUser().guid
+    }
 
    $scope.submit = function () {
       var surveyResponse = {
+        guid: GuidMaker.guid(),
         surveyType: "screening",
-        user_id: Session.currentUser,
-        time: new Date(),
-        client_id: "ClientIdString",
+        user_id: Session.currentUser().guid,
+        patient_id: $scope.patient.guid,
         responses: $scope.responses
       };
 
-      console.log(surveyResponse);
+      $scope.patient.patient_identifier = ClientIdMaker.makeID($scope.patient.clinic);
+
+      p.save("participants", $scope.patient);
+      p.save("surveyResponses", surveyResponse);
+      $state.go('main');
    }
 
 })
@@ -91,6 +93,9 @@ angular.module('starter.controllers', [])
   // syncs cached users with remote server
   $scope.syncUsers = function () {
     DataService.syncUsers();
+  }
+  $scope.getSurveys = function () {
+    DataService.getSurveys();
   }
 
   $scope.credentials = {

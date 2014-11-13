@@ -1,5 +1,33 @@
 <h2>Begin Client Enrollment</h2>
-<h3>Please select language</h3>
+<div class="list">
+  <label class="item item-input">
+    <input type="text" placeholder="First Name" ng-model="patient.first_name">
+  </label>
+  <label class="item item-input">
+    <input type="text" placeholder="Last Name" ng-model="patient.last_name">
+  </label>
+  <label class="item item-input">
+    <input type="text" placeholder="Address" ng-model="patient.address">
+  </label>
+  <label class="item item-input">
+    <input type="text" placeholder="City" ng-model="patient.city">
+  </label>
+  <label class="item item-input">
+    <input type="text" placeholder="Phone" ng-model="patient.phone">
+  </label>
+  <label class="item item-input item-select">
+    <div class="input-label">
+      Clinic Name
+    </div>
+    <select ng-model="patient.clinic">
+      <option>Blue</option>
+      <option selected>Green</option>
+      <option>Red</option>
+    </select>
+  </label>
+</div>
+
+<h3>Select language</h3>
 <button class="button button-block button-positive" ng-click="getScreening('English')">
   English
 </button>

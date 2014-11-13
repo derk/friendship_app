@@ -61,10 +61,30 @@ angular.module('starter.services', [])
     return this;
 })
 
-.service('screeningService', function ($http) {
+.service('ClientIdMaker', function () {
+  return {
+    makeID: function (clinic) {
+
+      function randString() {
+            var text = "";
+            var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+            for( var i=0; i < 4; i++ )
+                text += characters.charAt(Math.floor(Math.random() * characters.length));
+            return text;
+      }
+
+      var date = new Date();
+      var clientId = clinic + '-' + date.getMonth() + '-' + date.getDate() + '-' + date.getFullYear() + '-' + randString();
+      return clientId;
+    }
+  }
+})
+
+.service('surveyService', function () {
     return {
       getScreening: function() {
-         return $http.get('assessments/screening.json');
+         return p.find("surveyQuestions", {group: "Screening"});
       }
     }
 })

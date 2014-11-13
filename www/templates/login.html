@@ -3,10 +3,13 @@
   <form ng-submit="loginUser(credentials)">
     <div class="list">
       <label class="item item-input">
+        <input type="text" placeholder="Email" ng-model="credentials.email">
+      </label>
+      <label class="item item-input">
         <input type="text" placeholder="PIN" ng-model="credentials.pin">
       </label>
     </div>
     <button type="submit" class="button button-block button-positive">Login</button>
   </form>
-  <button class="button button-block button-negative" ng-click="syncUsers()">Sync Users</button>
+  <button class="button button-block button-negative" ng-click="syncUsers(); getSurveys()">Sync</button>
 </ion-content>

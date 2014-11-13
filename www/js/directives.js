@@ -40,6 +40,8 @@ angular.module('starter.directives', [])
               scope.currentIndex--;
           };
 
+          scope.submit = scope.submit
+
           scope.questionViewType = function(questionType){
 
               switch (questionType){

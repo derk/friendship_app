@@ -5,20 +5,17 @@ angular.module('starter.survey_builder', [])
     build: function(source, sourceLanguage) {
       var content = [];
 
+      console.log(source);
       // Loop through each object
       _.each(source, function (object){
-
         //build new survey object
-
-        // This should already be generated server side...
-        var guid = GuidMaker.guid();
 
         if(object.type === "numeric") {
             object.type = "number";
         };
 
         var question = {
-            id: guid,
+            id: object.guid,
             questionGroup: object.group,
             questionDataLabel: (object.group + '_' + object.orderer),
             responseGroupId: object.group,
@@ -41,7 +38,7 @@ angular.module('starter.survey_builder', [])
                 var orderer = key.match(/\d+/)[0];
 
                 //Check if it is a response label and exists
-                if(!key.endsWith("value") && value !== "") {
+                if(!key.endsWith("value") && value !== null) {
 
                     //construct response object
                     var responseObject = {
@@ -56,7 +53,7 @@ angular.module('starter.survey_builder', [])
                     valuelessResponses.push(responseObject);
                 };
 
-                if (key.endsWith("value") && value !== "") {
+                if (key.endsWith("value") && value !== null) {
 
                     // parse out orderer
                     var orderer = key.match(/\d+/)[0];
