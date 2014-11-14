@@ -73,7 +73,7 @@ angular.module('starter.controllers', [])
    $scope.submit = function () {
       var surveyResponse = {
         guid: GuidMaker.guid(),
-        surveyType: "screening",
+        survey_type: "Screening",
         user_id: Session.currentUser().guid,
         patient_id: $scope.patient.guid,
         responses: $scope.responses
@@ -91,11 +91,11 @@ angular.module('starter.controllers', [])
 .controller('LoginCtrl', function($scope, $rootScope, $state, DataService, AUTH_EVENTS, AuthService, Session) {
   Session.destroy();
   // syncs cached users with remote server
-  $scope.syncUsers = function () {
+
+  $scope.sync = function () {
     DataService.syncUsers();
-  }
-  $scope.getSurveys = function () {
     DataService.getSurveys();
+    DataService.exportResponses();
   }
 
   $scope.credentials = {

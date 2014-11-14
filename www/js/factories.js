@@ -3,9 +3,29 @@ angular.module('starter.factories', [])
 .factory('DataService', ['$http', 'localstorage', 'lastSync', function($http, localstorage, lastSync) {
   return {
 
+    exportResponses: function () {
+      var responses = p.find("surveyResponses");
+      $http({
+          url: "https://friendshipbench-staging.cbits.northwestern.edu/api/responses",
+          // url: "http://localhost:3000/api/responses",
+          method: "POST",
+          data: {"surveyResponses": responses},
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          }
+         })
+        .success(function (data){
+          p.nuke("surveyResponses");
+          alert(data.res);
+        })
+        .error(function (data){
+          alert("error -- response export failed");
+        });
+    },
+
     getSurveys: function () {
       $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/surveys")
-
+      // $http.get("http://localhost:3000/api/surveys")
       .success(function (data){
 
         p.nuke("surveyQuestions");
@@ -24,6 +44,7 @@ angular.module('starter.factories', [])
     syncUsers: function () {
 
       $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/users")
+      // $http.get("http://localhost:3000/api/users")
 
       .success(function (data){
         _.each(data.users, function (user) {
