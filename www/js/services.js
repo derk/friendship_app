@@ -85,6 +85,9 @@ angular.module('starter.services', [])
     return {
       getScreening: function() {
          return p.find("surveyQuestions", {group: "Screening"});
+      },
+      getBaseline: function() {
+          return p.find("surveyQuestions", {group: "Baseline/3/6"});
       }
     }
 })

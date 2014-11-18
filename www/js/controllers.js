@@ -30,6 +30,10 @@ angular.module('starter.controllers', [])
     lastSync.update();
   }
 
+  $scope.downloadSurveys = function () {
+    DataService.getSurveys();
+  }
+
 })
 
 .controller('PdfCtrl', function($scope) {
@@ -41,12 +45,28 @@ angular.module('starter.controllers', [])
   $scope.userRole = Session.currentUser().role;
 })
 
-.controller('NewPatientsCtrl', function($scope, GuidMaker, $state, $stateParams, SurveyBuilder, surveyService, Session, ClientIdMaker) {
+.controller('NewPatientsCtrl', function($scope, GuidMaker, $state, Session, ClientIdMaker, $stateParams, SurveyBuilder, surveyService) {
+
+   $scope.patient = {
+      guid: GuidMaker.guid(),
+      research_assistant_id: Session.currentUser().guid
+    }
 
     $scope.getScreening = function (language) {
+      $scope.patient.patient_identifier = ClientIdMaker.makeID($scope.patient.clinic);
+      p.save("participants", $scope.patient);
       var screeningQuestions = surveyService.getScreening();
-      $scope.questionGroups = SurveyBuilder.build(screeningQuestions, language)
-      $state.go('newPatients.screening')
+      $scope.questionGroups = SurveyBuilder.build(screeningQuestions, language);
+      $state.go('newPatients.screening');
+      $scope.language = language;
+      $scope.survey = "Screening";
+    }
+
+    $scope.getBaseline = function (language) {
+      $scope.survey = "Baseline/3/6"
+      var baselineQuestions = surveyService.getBaseline();
+      $scope.questionGroups = SurveyBuilder.build(baselineQuestions, language)
+      $state.go('newPatients.baseline')
       $scope.language = language
     }
 
@@ -65,27 +85,33 @@ angular.module('starter.controllers', [])
 
    $scope.responses = {};
 
-   $scope.patient = {
-      guid: GuidMaker.guid(),
-      research_assistant_id: Session.currentUser().guid
-    }
-
-   $scope.submit = function () {
+  function buildResponse (survey, patient, responses) {
       var surveyResponse = {
-        guid: GuidMaker.guid(),
-        survey_type: "Screening",
-        user_id: Session.currentUser().guid,
-        patient_id: $scope.patient.guid,
-        responses: $scope.responses
-      };
-
-      $scope.patient.patient_identifier = ClientIdMaker.makeID($scope.patient.clinic);
-
-      p.save("participants", $scope.patient);
-      p.save("surveyResponses", surveyResponse);
-      $state.go('main');
+            guid: GuidMaker.guid(),
+            survey_type: survey,
+            user_id: Session.currentUser().guid,
+            patient_id: patient.guid,
+            responses: responses
+          };
+          return surveyResponse;
    }
 
+   $scope.submit = function () {
+     var surveyResponse = buildResponse($scope.survey, $scope.patient, $scope.responses);
+
+      switch($scope.survey) {
+
+        case "Screening":
+          p.save("surveyResponses", surveyResponse);
+          $scope.getBaseline("English");
+          break;
+
+        case "Baseline/3/6":
+          p.save("surveyResponses", surveyResponse);
+          $state.go("main");
+          break;
+      }
+  }
 })
 
 .controller('LoginCtrl', function($scope, $rootScope, $state, DataService, AUTH_EVENTS, AuthService, Session) {
@@ -94,7 +120,6 @@ angular.module('starter.controllers', [])
 
   $scope.sync = function () {
     DataService.syncUsers();
-    DataService.getSurveys();
     DataService.exportResponses();
   }
 

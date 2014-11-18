@@ -53,7 +53,7 @@ angular.module('starter', [
     .state('newPatients', {
       abstract: true,
       url: '/new_patients',
-      templateUrl: 'templates/new_patients.html',
+      templateUrl: 'templates/newPatients.html',
       controller: "NewPatientsCtrl",
       data: {
         authorizedRoles: [USER_ROLES.asisstant, USER_ROLES.supervisor]
@@ -68,6 +68,11 @@ angular.module('starter', [
     .state('newPatients.screening', {
       url: '/screening',
       templateUrl: "templates/newPatients.screening.html",
+    })
+
+    .state('newPatients.baseline', {
+      url: '/baseline',
+      templateUrl: "templates/newPatients.baseline.html",
     })
 
     .state('patients', {
