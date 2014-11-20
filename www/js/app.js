@@ -12,7 +12,6 @@ angular.module('friendshipBench', [
                'friendshipBench.factories',
                'friendshipBench.directives',
                'pdf',
-               'friendshipBench.questions',
                'friendshipBench.survey_builder',
                'ngCookies'
 ])
