@@ -1,14 +1,14 @@
 <ion-content ng-controller="MainCtrl">
   <div class="list card">
-    <a href="#" ui-sref='newPatients.landing' ng-if="currentUser.role != 'Health Worker'" class="item item-icon-left">
+    <a ui-sref='newPatients.landing' ng-if="currentUser.role != 'Health Worker'" class="item item-icon-left">
       <i class="icon ion-person-add"></i>
       Enroll New Patients
     </a>
-    <a href="#" ui-sref='patients' class="item item-icon-left">
+    <a ui-sref='patients' class="item item-icon-left">
       <i class="icon ion-person-stalker"></i>
       Manage Active Patients
     </a>
-    <a href="#" ui-sref='pdf' class="item item-icon-left">
+    <a ui-sref='pdf' class="item item-icon-left">
       <i class="icon ion-android-note"></i>
       View Manual
     </a>

@@ -1,7 +1,7 @@
 angular.module('friendshipBench.controllers', [])
 
 // A simple controller that fetches a list of data from a service
-.controller('AppCtrl', function($scope, $state, USER_ROLES, AuthService, Session, $cookieStore, $rootScope, lastSync) {
+.controller('AppCtrl', function($scope, $state, USER_ROLES, AuthService, Session, $rootScope, lastSync) {
 
   $scope.currentUser = Session.currentUser();
   $scope.userRoles = USER_ROLES;
@@ -23,7 +23,7 @@ angular.module('friendshipBench.controllers', [])
   });
 })
 
-.controller('MainCtrl', function($scope, localstorage, DataService, Session, lastSync) {
+.controller('MainCtrl', function($state, $scope, localstorage, DataService, Session, lastSync) {
 
   $scope.syncData = function () {
     DataService.syncData();

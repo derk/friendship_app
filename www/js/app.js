@@ -12,8 +12,7 @@ angular.module('friendshipBench', [
                'friendshipBench.factories',
                'friendshipBench.directives',
                'pdf',
-               'friendshipBench.survey_builder',
-               'ngCookies'
+               'friendshipBench.survey_builder'
 ])
 
 .config(function($stateProvider, $urlRouterProvider, USER_ROLES, $httpProvider) {

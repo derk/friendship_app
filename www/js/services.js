@@ -14,18 +14,18 @@ angular.module('friendshipBench.services', [])
   }
 }])
 
-.service('Session', function ($rootScope, $cookieStore) {
+.service('Session', function ($rootScope, localstorage) {
   return {
     create: function (user) {
-      $cookieStore.put('user', user);
+      localstorage.setObject('user', user);
       $rootScope.$broadcast("userChanged");
     },
     destroy: function () {
-      $cookieStore.put('user', null);
+      localstorage.setObject('user', null);
       $rootScope.$broadcast("userChanged");
     },
     currentUser: function() {
-     return $cookieStore.get('user')
+     return localstorage.getObject('user');
     }
   }
 })

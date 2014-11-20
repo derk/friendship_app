@@ -126,7 +126,7 @@ angular.module('friendshipBench.factories', [])
   }
 }])
 
-.factory('AuthService', function (localstorage, Session, $cookieStore) {
+.factory('AuthService', function (localstorage, Session, localstorage) {
   var authService = {};
 
   authService.login = function (credentials) {
@@ -138,7 +138,7 @@ angular.module('friendshipBench.factories', [])
   };
 
   authService.isAuthenticated = function () {
-    return !!$cookieStore.get('user');
+    return !!localstorage.getObject('user');
   };
 
   authService.isAuthorized = function (authorizedRoles) {
@@ -146,7 +146,7 @@ angular.module('friendshipBench.factories', [])
       authorizedRoles = [authorizedRoles];
     }
     return (authService.isAuthenticated() &&
-      authorizedRoles.indexOf($cookieStore.get('user').role) !== -1);
+      authorizedRoles.indexOf(localstorage.getObject('user').role) !== -1);
   };
 
   return authService;
