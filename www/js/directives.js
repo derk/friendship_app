@@ -1,4 +1,4 @@
-angular.module('starter.directives', [])
+angular.module('friendshipBench.directives', [])
 
 .directive('survey', function ($location, $timeout) {
     return {

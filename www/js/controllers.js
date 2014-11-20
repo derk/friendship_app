@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('friendshipBench.controllers', [])
 
 // A simple controller that fetches a list of data from a service
 .controller('AppCtrl', function($scope, $state, USER_ROLES, AuthService, Session, $cookieStore, $rootScope, lastSync) {
@@ -40,8 +40,8 @@ angular.module('starter.controllers', [])
     $scope.pdfUrl = 'pdfs/manual.pdf';
 })
 
-.controller('PatientsCtrl', function($scope, $state, ScopedParticipants, Session) {
-  $scope.participants = ScopedParticipants.participants($scope.currentUser);
+.controller('PatientsCtrl', function($scope, $state, ParticipantFactory, Session) {
+  $scope.participants = ParticipantFactory.scopedParticipants($scope.currentUser);
   $scope.userRole = Session.currentUser().role;
 })
 

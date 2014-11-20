@@ -1,4 +1,4 @@
-angular.module('starter.factories', [])
+angular.module('friendshipBench.factories', [])
 
 .factory('DataService', ['$http', 'localstorage', 'lastSync', function($http, localstorage, lastSync) {
   return {
@@ -150,4 +150,39 @@ angular.module('starter.factories', [])
   };
 
   return authService;
-});
+})
+
+.factory('ParticipantFactory', function (){
+
+    var participantFactory = {};
+
+    participantFactory.getParticipants = function () {
+      return p.find('participants');
+    };
+
+    participantFactory.scopedParticipants = function (currentUser) {
+      switch (currentUser.role) {
+        case "Health Worker":
+          return p.find('participants', {health_worker_guid: currentUser.guid});
+          break;
+        case "Research Assistant":
+          return p.find('participants', {research_assistant_guid: currentUser.guid});
+          break;
+        case "Supervisor":
+          return p.find('participants');
+          break;
+        default:
+          alert('You are not authorized to manage any patients.');
+      }
+    };
+
+    participantFactory.getParticipant = function (guid) {
+       return p.find("participants", {guid: guid});
+    };
+
+    participantFactory.saveParticipant = function (participant) {
+        return p.save('participants', participant);
+    };
+
+    return participantFactory;
+})

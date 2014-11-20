@@ -1,4 +1,4 @@
-angular.module('starter.services', [])
+angular.module('friendshipBench.services', [])
 
 .service('lastSync', ['$rootScope', 'localstorage', function ($rootScope, localstorage){
   return {
@@ -26,24 +26,6 @@ angular.module('starter.services', [])
     },
     currentUser: function() {
      return $cookieStore.get('user')
-    }
-  }
-})
-
-.service('ScopedParticipants', function () {
-  this.participants = function (currentUser) {
-    switch (currentUser.role) {
-      case "Health Worker":
-        return p.find('participants', {health_worker_guid: currentUser.guid});
-        break;
-      case "Research Assistant":
-        return p.find('participants', {research_assistant_guid: currentUser.guid});
-        break;
-      case "Supervisor":
-        return p.find('participants');
-        break;
-      default:
-        alert('You are not authorized to manage any patients.');
     }
   }
 })

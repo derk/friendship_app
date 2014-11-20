@@ -1,4 +1,4 @@
-angular.module('starter.survey_builder', [])
+angular.module('friendshipBench.survey_builder', [])
 
 .service('SurveyBuilder', function (GuidMaker){
   return {
