@@ -19,6 +19,7 @@ angular.module('friendshipBench.controllers', [])
 
   $scope.lastSync = lastSync.get();
   $scope.$on('synced!', function(){
+    debugger;
     $scope.lastSync = lastSync.get();
   });
 })

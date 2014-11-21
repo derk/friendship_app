@@ -1,5 +1,5 @@
 <form>
-    <div ng-repeat="questions in questionGroups" class="question-group list" data-idx="{{$index}}" ng-show='showQuestion({{$index}})' >
+    <div ng-repeat="questions in questionGroups" class="question-group list" data-idx="{{$index}}" ng-if='showQuestion($index)' >
         <div ng-repeat="question in questions" ng-show='language == question.language' >
             <label class="content-label">
                 <div ng-switch on="questionViewType(question.type)">
