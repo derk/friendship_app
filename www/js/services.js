@@ -3,7 +3,8 @@ angular.module('friendshipBench.services', [])
 .service('lastSync', ['$rootScope', 'localstorage', function ($rootScope, localstorage){
   return {
     update: function () {
-      var now = new Date();
+      var now = moment();
+      var now = now.format("M-D-YYYY h:mm a")
       localstorage.set("lastSync", now);
       console.log("lastSync updated");
       $rootScope.$broadcast("synced!")

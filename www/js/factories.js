@@ -68,7 +68,7 @@ angular.module('friendshipBench.factories', [])
         _.each(data.users, function (user) {
             p.save("users", user);
         });
-
+         lastSync.update();
         alert("user sync successful");
       })
       .error(function (err){
