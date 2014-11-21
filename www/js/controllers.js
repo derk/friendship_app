@@ -25,6 +25,11 @@ angular.module('friendshipBench.controllers', [])
 
 .controller('MainCtrl', function($state, $scope, localstorage, DataService, Session, lastSync) {
 
+  $scope.go = function (state) {
+    $state.go(state);
+    alert(state);
+  }
+
   $scope.syncData = function () {
     DataService.syncData();
     lastSync.update();
@@ -55,8 +60,12 @@ angular.module('friendshipBench.controllers', [])
     $scope.getScreening = function (language) {
       $scope.patient.patient_identifier = ClientIdMaker.makeID($scope.patient.clinic);
       p.save("participants", $scope.patient);
-      var screeningQuestions = surveyService.getScreening();
-      $scope.questionGroups = SurveyBuilder.build(screeningQuestions, language);
+      if(language === 'English'){
+        $scope.questionGroups = p.find('EnglishScreeningSurveys')[0];
+      }
+      else{
+        $scope.questionGroups = p.find('ShonaScreeningSurveys')[0];
+      }
       $state.go('newPatients.screening');
       $scope.language = language;
       $scope.survey = "Screening";
@@ -64,8 +73,12 @@ angular.module('friendshipBench.controllers', [])
 
     $scope.getBaseline = function (language) {
       $scope.survey = "Baseline/3/6"
-      var baselineQuestions = surveyService.getBaseline();
-      $scope.questionGroups = SurveyBuilder.build(baselineQuestions, language)
+      if(language === 'English'){
+        $scope.questionGroups = p.find('EnglishBaselineSurveys')[0];
+      }
+      else{
+        $scope.questionGroups = p.find('ShonaBaselineSurveys')[0];
+      }
       $state.go('newPatients.baseline')
       $scope.language = language
     }

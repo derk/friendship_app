@@ -1,6 +1,6 @@
 angular.module('friendshipBench.factories', [])
 
-.factory('DataService', ['$http', 'localstorage', 'lastSync', function($http, localstorage, lastSync) {
+.factory('DataService', ['$http', 'localstorage', 'lastSync', 'SurveyBuilder', 'surveyService', function($http, localstorage, lastSync, SurveyBuilder, surveyService) {
   return {
 
     exportResponses: function () {
@@ -29,9 +29,27 @@ angular.module('friendshipBench.factories', [])
       .success(function (data){
 
         p.nuke("surveyQuestions");
+        p.nuke('EnglishScreeningSurveys');
+        p.nuke("ShonaScreeningSurveys");
+        p.nuke('EnglishBaselineSurveys');
+        p.nuke("ShonaScreeningSurveys");
+
         _.each(data.surveys, function (question) {
             p.save("surveyQuestions", question);
         });
+
+        var screeningQuestions = surveyService.getScreening();
+        var screeningSurvey = SurveyBuilder.build(screeningQuestions, "English");
+        p.save('EnglishScreeningSurveys', screeningSurvey);
+        screeningSurvey = SurveyBuilder.build(screeningQuestions, "Shona");
+        p.save('ShonaScreeningSurveys', screeningSurvey);
+
+
+        var baselineQuestions = surveyService.getBaseline();
+        var baselineSurvey = SurveyBuilder.build(baselineQuestions, "English");
+        p.save('EnglishBaselineSurveys', baselineSurvey);
+        baselineSurvey = SurveyBuilder.build(baselineQuestions, "Shona");
+        p.save('ShonaBaselineSurveys', baselineSurvey);
 
         alert("survey import successful");
 
