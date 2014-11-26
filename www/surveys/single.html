@@ -2,14 +2,16 @@
 <div class="response-group list">
     <div ng-switch on="question.type">
         <div ng-switch-when="textarea">
-            <label class="item item-input item-stacked-label">
-                <span class="input-label"><div ng-include="'surveys/title.html'"></div></span>
+           <div ng-include="'surveys/title.html'"></div>
+            <label class="item item-input">
+
                 <textarea name="{{question.questionDataLabel}}" ng-model="responses[question.id]"></textarea>
             </label>
         </div>
         <div ng-switch-default>
-            <label class="item item-input item-stacked-label">
-                <span class="input-label"><div ng-include="'surveys/title.html'"></div></span>
+        <div ng-include="'surveys/title.html'"></div>
+            <label class="item item-input">
+
                 <input type="{{question.type}}" name="{{question.questionDataLabel}}" ng-model="responses[question.id]">
             </label>
         </div>

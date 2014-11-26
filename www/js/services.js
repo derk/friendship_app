@@ -67,10 +67,10 @@ angular.module('friendshipBench.services', [])
 .service('surveyService', function () {
     return {
       getScreening: function() {
-         return p.find("surveyQuestions", {group: "Screening"});
+         return _.first(_.where(p.find("groups")[0], {group_name: "Screening"}));
       },
       getBaseline: function() {
-          return p.find("surveyQuestions", {group: "Baseline/3/6"});
+          return _.first(_.where(p.find("groups")[0], {group_name: "Baseline/3/6"}));
       }
     }
 })

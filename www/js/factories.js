@@ -6,8 +6,8 @@ angular.module('friendshipBench.factories', [])
     exportResponses: function () {
       var responses = p.find("surveyResponses");
       $http({
-          url: "https://friendshipbench-staging.cbits.northwestern.edu/api/responses",
-          // url: "http://localhost:3000/api/responses",
+          // url: "https://friendshipbench-staging.cbits.northwestern.edu/api/responses",
+          url: "http://localhost:3000/api/responses",
           method: "POST",
           data: {"surveyResponses": responses},
           headers: {
@@ -24,32 +24,22 @@ angular.module('friendshipBench.factories', [])
     },
 
     getSurveys: function () {
-      $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/surveys")
-      // $http.get("http://localhost:3000/api/surveys")
+      // $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/groups")
+      $http.get("http://localhost:3000/api/groups")
       .success(function (data){
 
-        p.nuke("surveyQuestions");
-        p.nuke('EnglishScreeningSurveys');
-        p.nuke("ShonaScreeningSurveys");
-        p.nuke('EnglishBaselineSurveys');
-        p.nuke("ShonaScreeningSurveys");
-
-        _.each(data.surveys, function (question) {
-            p.save("surveyQuestions", question);
-        });
+        p.nuke("groups");
+        p.nuke('screeningSurveys');
+        p.nuke('baselineSurveys');
+        p.save("groups", data);
 
         var screeningQuestions = surveyService.getScreening();
-        var screeningSurvey = SurveyBuilder.build(screeningQuestions, "English");
-        p.save('EnglishScreeningSurveys', screeningSurvey);
-        screeningSurvey = SurveyBuilder.build(screeningQuestions, "Shona");
-        p.save('ShonaScreeningSurveys', screeningSurvey);
-
+        var screeningSurvey = SurveyBuilder.build(screeningQuestions);
+        p.save('screeningSurveys', screeningSurvey);
 
         var baselineQuestions = surveyService.getBaseline();
-        var baselineSurvey = SurveyBuilder.build(baselineQuestions, "English");
-        p.save('EnglishBaselineSurveys', baselineSurvey);
-        baselineSurvey = SurveyBuilder.build(baselineQuestions, "Shona");
-        p.save('ShonaBaselineSurveys', baselineSurvey);
+        var baselineSurvey = SurveyBuilder.build(baselineQuestions);
+        p.save('baselineSurveys', baselineSurvey);
 
         alert("survey import successful");
 
@@ -61,8 +51,8 @@ angular.module('friendshipBench.factories', [])
 
     syncUsers: function () {
 
-      $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/users")
-      // $http.get("http://localhost:3000/api/users")
+      // $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/users")
+      $http.get("http://localhost:3000/api/users")
 
       .success(function (data){
         _.each(data.users, function (user) {
@@ -79,8 +69,8 @@ angular.module('friendshipBench.factories', [])
     syncData: function() {
 
       function importPatients(patients) {
-        $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/participants")
-        // $http.get("http://localhost:3000/api/participants")
+        // $http.get("https://friendshipbench-staging.cbits.northwestern.edu/api/participants")
+        $http.get("http://localhost:3000/api/participants")
 
         .success(function (data){
           p.nuke("participants");
@@ -98,8 +88,8 @@ angular.module('friendshipBench.factories', [])
 
       function exportPatients(patients) {
         $http({
-          url: "https://friendshipbench-staging.cbits.northwestern.edu/api/participants",
-          // url: "http://localhost:3000/api/participants",
+          // url: "https://friendshipbench-staging.cbits.northwestern.edu/api/participants",
+          url: "http://localhost:3000/api/participants",
           method: "POST",
           data: {"participants": patients},
           headers: {
