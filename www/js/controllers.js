@@ -64,11 +64,11 @@ angular.module('friendshipBench.controllers', [])
       $scope.questionGroups = p.find('screeningSurveys')[0];
       $state.go('newPatients.screening');
       $scope.language = language;
-      $scope.survey = "Screening";
+      $scope.group = "Screening";
     }
 
     $scope.getBaseline = function (language) {
-      $scope.survey = "Baseline/3/6"
+      $scope.group = "Baseline/3/6"
       $scope.questionGroups = p.find('baselineSurveys')[0];
       $state.go('newPatients.baseline')
       $scope.language = language
@@ -89,10 +89,9 @@ angular.module('friendshipBench.controllers', [])
 
    $scope.responses = {};
 
-  function buildResponse (survey, patient, responses) {
+  function buildResponse (group, patient, responses) {
       var surveyResponse = {
-            guid: GuidMaker.guid(),
-            survey_type: survey,
+            group: group,
             user_id: Session.currentUser().guid,
             patient_id: patient.guid,
             responses: responses
@@ -101,9 +100,9 @@ angular.module('friendshipBench.controllers', [])
    }
 
    $scope.submit = function () {
-     var surveyResponse = buildResponse($scope.survey, $scope.patient, $scope.responses);
+     var surveyResponse = buildResponse($scope.group, $scope.patient, $scope.responses);
 
-      switch($scope.survey) {
+      switch($scope.group) {
 
         case "Screening":
           p.save("surveyResponses", surveyResponse);
